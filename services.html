@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — SovereignMan OÜ</title>
+<meta name="description" content="OSINT intelligence, financial forensics, cyber-investigation, law enforcement support and secure development services offered by SovereignMan OÜ.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+<div class="grain"></div>
+<div class="scanline"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="bracket">[</span>SOVEREIGNMAN<span class="bracket">]</span><span class="cursor"></span></div>
+    <div class="nav-right">
+      <nav>
+        <ul id="navlist">
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+          <li><a href="services.html" class="active" data-i18n="nav_services">Services</a></li>
+          <li><a href="expertise.html" data-i18n="nav_expertise">Expertise</a></li>
+          <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+          <li><a href="recherche.html" data-i18n="nav_search">Search</a></li>
+          <li class="lang-switch">
+            <button data-lang="en">EN</button><button data-lang="et">ET</button><button data-lang="fr">FR</button><button data-lang="ru">RU</button>
+          </li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" id="navToggle" data-i18n="menu_label">[ MENU ]</button>
+    </div>
+  </div>
+</header>
+
+<header class="page-hero">
+  <div class="container">
+    <span class="tag" data-i18n="page_services_tag">Capabilities</span>
+    <h1 class="section-title" data-i18n="page_services_title">Areas of Intervention</h1>
+    <p class="section-sub" data-i18n="page_services_sub">A unique foundation combining human-driven intelligence powered by open sources, financial forensics and technical development — to produce actionable intelligence, not raw data.</p>
+  </div>
+</header>
+
+<section style="border-top:none; padding-top:0;">
+  <div class="container">
+    <div class="grid">
+
+      <div class="card">
+        <div class="num">01 // OSINT</div>
+        <h3 data-i18n="c1_title">Open Source Intelligence</h3>
+        <p class="lead" data-i18n="c1_lead">Collection, correlation and analysis of open sources on an international scale.</p>
+        <ul>
+          <li data-i18n="c1_li1">Mapping the digital footprint of individuals, entities and organizations</li>
+          <li data-i18n="c1_li2">Social media monitoring and threat detection</li>
+          <li data-i18n="c1_li3">Dark web / deep web monitoring: data leaks, black markets, targeted mentions</li>
+          <li data-i18n="c1_li4">Identity verification, reputation checks and pre-employment screening</li>
+          <li data-i18n="c1_li5">Geospatial analysis and image metadata exploitation (GEOINT / IMINT)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="num">02 // FININT</div>
+        <h3 data-i18n="c2_title">Financial Analysis &amp; Forensics</h3>
+        <p class="lead" data-i18n="c2_lead">Unravelling complex financial arrangements and cross-border flows.</p>
+        <ul>
+          <li data-i18n="c2_li1">Analysis of financial schemes, offshore structures and shell companies</li>
+          <li data-i18n="c2_li2">Fraud detection, anti-money laundering (AML) and corruption cases</li>
+          <li data-i18n="c2_li3">Asset tracing and reconstruction of financial flows</li>
+          <li data-i18n="c2_li4">Financial due diligence for investment, M&amp;A and pre-litigation</li>
+          <li data-i18n="c2_li5">Cryptocurrency analysis, blockchain forensics and KYC/KYB support</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="num">03 // CYBINT</div>
+        <h3 data-i18n="c3_title">Cyber-Investigation</h3>
+        <p class="lead" data-i18n="c3_lead">Digital investigations and technical monitoring of cyber threats.</p>
+        <ul>
+          <li data-i18n="c3_li1">Digital forensics and incident reconstruction</li>
+          <li data-i18n="c3_li2">Detection of identity theft and online fraud</li>
+          <li data-i18n="c3_li3">Tracking malicious infrastructure (domains, IPs, C2 servers)</li>
+          <li data-i18n="c3_li4">Technical attribution of attacks and malware campaign analysis</li>
+          <li data-i18n="c3_li5">Mapping cybercriminal ecosystems and their financial channels</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="num">04 // GOV</div>
+        <h3 data-i18n="c4_title">Law Enforcement &amp; Governments</h3>
+        <p class="lead" data-i18n="c4_lead">Operational and technical support for sovereign missions.</p>
+        <ul>
+          <li data-i18n="c4_li1">Support for judicial and administrative investigations under lawful mandate</li>
+          <li data-i18n="c4_li2">Production of actionable, court-admissible intelligence reports</li>
+          <li data-i18n="c4_li3">OSINT training and skills transfer for specialized units</li>
+          <li data-i18n="c4_li4">Cooperation on cross-border cases (organized crime, fraud, cybercrime)</li>
+          <li data-i18n="c4_li5">Geopolitical and security risk analysis</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="num">05 // CORP</div>
+        <h3 data-i18n="c5_title">Private Investigators &amp; Corporations</h3>
+        <p class="lead" data-i18n="c5_lead">Research and verification for private-sector actors.</p>
+        <ul>
+          <li data-i18n="c5_li1">Locating individuals and assets</li>
+          <li data-i18n="c5_li2">Unfair competition, industrial espionage and internal leak investigations</li>
+          <li data-i18n="c5_li3">Reputation protection and digital crisis management</li>
+          <li data-i18n="c5_li4">Verification of business partners and counterparties</li>
+          <li data-i18n="c5_li5">Documented support for civil and commercial proceedings</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="num">06 // DEV</div>
+        <h3 data-i18n="c6_title">Development &amp; Cybersecurity</h3>
+        <p class="lead" data-i18n="c6_lead">The tools that make intelligence operational.</p>
+        <ul>
+          <li data-i18n="c6_li1">Custom application and monitoring platform development</li>
+          <li data-i18n="c6_li2">Internal OSINT aggregation and visualization tools</li>
+          <li data-i18n="c6_li3">Secure and encrypted communication solutions</li>
+          <li data-i18n="c6_li4">Security audits, cybersecurity consulting and system hardening</li>
+          <li data-i18n="c6_li5">Technology watch and integration of specialized data sources</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2 data-i18n="cta_title">Every case starts with a conversation.</h2>
+    <p data-i18n="cta_sub">Tell us the context — under mandate, we turn open information into a decision you can act on.</p>
+    <a class="btn" href="contact.html" data-i18n="btn_contact">// Start a case</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-row">
+    <div id="footerCopy">© 2026 SovereignMan OÜ — Tallinn, Estonia — Reg. No. 16797348</div>
+    <div><a href="#top" data-i18n="footer_top">Back to top ↑</a></div>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>

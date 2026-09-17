@@ -1,0 +1,9 @@
+{
+  "name": "sovereignman-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SovereignMan OU website with a password-protected OSINT Industries search console (Vercel serverless functions).",
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search — SovereignMan OÜ</title>
+<meta name="description" content="Internal OSINT Industries search console — SovereignMan OÜ staff only.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .gate-wrap{min-height:80vh; display:flex; align-items:center; justify-content:center; padding-top:100px;}
+  .gate-box{max-width:420px; width:100%; border:1px solid var(--border); background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel2)); padding:36px 32px;}
+  .gate-box .tag{margin-bottom:14px;}
+  .gate-box h1{font-family:var(--mono-display); font-size:22px; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;}
+  .gate-box p{color:var(--muted); font-size:14px; margin-bottom:22px;}
+  .gate-error{color:var(--magenta); font-size:13px; margin-top:10px; display:none;}
+  #searchApp{display:none;}
+  .result-card{background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel2)); border:1px solid var(--border); padding:20px 22px; margin-bottom:16px;}
+  .result-card h4{font-family:var(--mono-display); color:var(--cyan-soft); text-transform:uppercase; letter-spacing:1px; font-size:14px; margin-bottom:10px;}
+  .kv{display:grid; grid-template-columns:180px 1fr; gap:6px 14px; font-size:13.5px; margin-bottom:4px;}
+  .kv .k{color:var(--muted);}
+  .kv .v{color:var(--text); word-break:break-word;}
+  .status-pill{display:inline-block; font-family:var(--mono-display); font-size:11px; letter-spacing:1px; padding:3px 9px; border:1px solid var(--border); text-transform:uppercase; margin-left:8px;}
+  .status-found{color:var(--cyan); border-color:var(--blue);}
+  .status-notfound{color:var(--muted);}
+  .json-toggle{background:none; border:1px solid var(--border); color:var(--muted); font-family:var(--mono-display); font-size:11px; letter-spacing:1px; padding:6px 10px; cursor:pointer; margin-top:10px;}
+  .json-toggle:hover{color:var(--cyan-soft); border-color:var(--blue);}
+  pre.raw-json{background:#000; border:1px solid var(--border); padding:16px; font-size:12px; overflow-x:auto; margin-top:10px; color:var(--cyan-soft); display:none;}
+  .banner-msg{border:1px solid var(--border); padding:14px 18px; font-size:13.5px; margin-bottom:20px;}
+  .banner-msg.error{border-left:3px solid var(--magenta); color:var(--muted);}
+  .banner-msg.info{border-left:3px solid var(--blue); color:var(--muted);}
+  .search-row{display:grid; grid-template-columns:200px 1fr auto; gap:14px; align-items:end;}
+  @media (max-width:760px){ .search-row{grid-template-columns:1fr;} .kv{grid-template-columns:130px 1fr;} }
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+<div class="grain"></div>
+<div class="scanline"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="bracket">[</span>SOVEREIGNMAN<span class="bracket">]</span><span class="cursor"></span></div>
+    <div class="nav-right">
+      <nav>
+        <ul id="navlist">
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+          <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+          <li><a href="expertise.html" data-i18n="nav_expertise">Expertise</a></li>
+          <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+          <li><a href="recherche.html" class="active" data-i18n="nav_search">Search</a></li>
+          <li class="lang-switch">
+            <button data-lang="en">EN</button><button data-lang="et">ET</button><button data-lang="fr">FR</button><button data-lang="ru">RU</button>
+          </li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" id="navToggle" data-i18n="menu_label">[ MENU ]</button>
+    </div>
+  </div>
+</header>
+
+<!-- ACCESS GATE -->
+<div class="gate-wrap" id="gateWrap">
+  <div class="gate-box">
+    <span class="tag" data-i18n="gate_title">Restricted Access</span>
+    <h1 data-i18n="page_search_title">OSINT Industries Search Engine</h1>
+    <p data-i18n="gate_desc">This tool is reserved for SovereignMan staff. Enter the access code to continue.</p>
+    <div class="field">
+      <input type="password" id="gatePassword" data-i18n-placeholder="gate_placeholder" placeholder="Access code" autocomplete="off">
+    </div>
+    <div class="btn-row" style="margin-top:16px;">
+      <button class="btn" id="gateSubmit" data-i18n="gate_button">// Unlock</button>
+    </div>
+    <div class="gate-error" id="gateError" data-i18n="gate_error">Incorrect access code.</div>
+  </div>
+</div>
+
+<!-- SEARCH APP (revealed after auth) -->
+<div id="searchApp">
+  <header class="page-hero">
+    <div class="container">
+      <span class="tag" data-i18n="page_search_tag">Internal Tool</span>
+      <h1 class="section-title" data-i18n="page_search_title">OSINT Industries Search Engine</h1>
+      <p class="section-sub" data-i18n="page_search_sub">Real-time lookups connected to your OSINT Industries account. Each search consumes credits from your subscription.</p>
+    </div>
+  </header>
+
+  <section style="border-top:none; padding-top:0;">
+    <div class="container">
+      <div class="search-row" style="margin-bottom:26px;">
+        <div class="field">
+          <label for="searchType" data-i18n="search_type_label">Search type</label>
+          <select id="searchType">
+            <option value="email" data-i18n="type_email">Email</option>
+            <option value="phone" data-i18n="type_phone">Phone number</option>
+            <option value="username" data-i18n="type_username">Username</option>
+            <option value="name" data-i18n="type_name">Full name</option>
+            <option value="wallet" data-i18n="type_wallet">Crypto wallet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="searchQuery" data-i18n="search_query_label">Search value</label>
+          <input type="text" id="searchQuery" data-i18n-placeholder="search_query_placeholder" placeholder="Enter a value matching the selected type…">
+        </div>
+        <div class="field">
+          <button class="btn" id="searchSubmit" data-i18n="submit_label">// Run search</button>
+        </div>
+      </div>
+
+      <label style="display:flex; align-items:center; gap:8px; margin-bottom:26px; cursor:pointer;">
+        <input type="checkbox" id="premiumToggle" style="width:auto;">
+        <span data-i18n="premium_label" style="font-size:13px; color:var(--muted); text-transform:none; letter-spacing:0; font-family:var(--mono-body);">Enable premium modules (Snapchat, TikTok…) — extra credits apply</span>
+      </label>
+
+      <div id="messages"></div>
+      <div id="results"></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="container footer-row">
+    <div id="footerCopy">© 2026 SovereignMan OÜ — Tallinn, Estonia — Reg. No. 16797348</div>
+    <div><a href="#top" data-i18n="footer_top">Back to top ↑</a></div>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/main.js"></script>
+<script>
+(function(){
+  const gateWrap = document.getElementById('gateWrap');
+  const searchApp = document.getElementById('searchApp');
+  const gatePassword = document.getElementById('gatePassword');
+  const gateSubmit = document.getElementById('gateSubmit');
+  const gateError = document.getElementById('gateError');
+  const messages = document.getElementById('messages');
+  const results = document.getElementById('results');
+  const searchSubmit = document.getElementById('searchSubmit');
+  const searchType = document.getElementById('searchType');
+  const searchQuery = document.getElementById('searchQuery');
+  const premiumToggle = document.getElementById('premiumToggle');
+
+  let sessionPassword = null;
+  try{ sessionPassword = sessionStorage.getItem('sm_access_code'); }catch(e){}
+
+  function lang(){ return document.documentElement.lang || 'en'; }
+  function t(key){ return (window.SM_TRANSLATIONS && SM_TRANSLATIONS[lang()] && SM_TRANSLATIONS[lang()][key]) || key; }
+
+  function unlock(){
+    gateWrap.style.display = 'none';
+    searchApp.style.display = 'block';
+  }
+
+  if(sessionPassword){ unlock(); }
+
+  async function tryUnlock(){
+    const pwd = gatePassword.value;
+    if(!pwd){ return; }
+    gateSubmit.disabled = true;
+    try{
+      const resp = await fetch('/api/auth', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ password: pwd })
+      });
+      const data = await resp.json().catch(()=>({}));
+      if(resp.ok && data.ok){
+        sessionPassword = pwd;
+        try{ sessionStorage.setItem('sm_access_code', pwd); }catch(e){}
+        gateError.style.display = 'none';
+        unlock();
+      } else {
+        gateError.style.display = 'block';
+      }
+    }catch(e){
+      gateError.textContent = t('error_generic');
+      gateError.style.display = 'block';
+    }
+    gateSubmit.disabled = false;
+  }
+  gateSubmit.addEventListener('click', tryUnlock);
+  gatePassword.addEventListener('keydown', (e) => { if(e.key === 'Enter') tryUnlock(); });
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function renderMessage(type, text){
+    messages.innerHTML = `<div class="banner-msg ${type}">${escapeHtml(text)}</div>`;
+  }
+  function clearMessages(){ messages.innerHTML = ''; }
+
+  function flatten(obj, prefix){
+    let rows = [];
+    if(obj === null || obj === undefined) return rows;
+    if(typeof obj !== 'object'){
+      rows.push([prefix || 'value', obj]);
+      return rows;
+    }
+    if(Array.isArray(obj)){
+      if(obj.length === 0) return rows;
+      if(obj.every(o => typeof o !== 'object')){
+        rows.push([prefix || 'value', obj.join(', ')]);
+        return rows;
+      }
+      obj.forEach((item, i) => { rows = rows.concat(flatten(item, prefix ? `${prefix}[${i}]` : `[${i}]`)); });
+      return rows;
+    }
+    Object.keys(obj).forEach(key => {
+      const val = obj[key];
+      const label = prefix ? `${prefix}.${key}` : key;
+      if(val !== null && typeof val === 'object'){
+        rows = rows.concat(flatten(val, label));
+      } else {
+        rows.push([label, val]);
+      }
+    });
+    return rows;
+  }
+
+  function renderModuleCard(name, statusLabel, foundBool, dataObj, rawObj){
+    const card = document.createElement('div');
+    card.className = 'result-card';
+    const statusClass = foundBool ? 'status-found' : 'status-notfound';
+    card.innerHTML = `<h4>${escapeHtml(name)}<span class="status-pill ${statusClass}">${escapeHtml(statusLabel)}</span></h4>`;
+
+    const rows = flatten(dataObj || {});
+    if(rows.length){
+      const kvWrap = document.createElement('div');
+      rows.slice(0, 40).forEach(([k,v]) => {
+        const row = document.createElement('div');
+        row.className = 'kv';
+        row.innerHTML = `<div class="k">${escapeHtml(k)}</div><div class="v">${escapeHtml(v)}</div>`;
+        kvWrap.appendChild(row);
+      });
+      card.appendChild(kvWrap);
+    }
+
+    const toggle = document.createElement('button');
+    toggle.className = 'json-toggle';
+    toggle.textContent = t('raw_json_label');
+    const pre = document.createElement('pre');
+    pre.className = 'raw-json';
+    pre.textContent = JSON.stringify(rawObj, null, 2);
+    toggle.addEventListener('click', () => {
+      const showing = pre.style.display === 'block';
+      pre.style.display = showing ? 'none' : 'block';
+      toggle.textContent = showing ? t('raw_json_label') : t('hide_json_label');
+    });
+    card.appendChild(toggle);
+    card.appendChild(pre);
+    return card;
+  }
+
+  function renderResults(payload){
+    results.innerHTML = '';
+    const result = payload && payload.result;
+
+    let modules = null;
+    if(Array.isArray(result)) modules = result;
+    else if(result && Array.isArray(result.data)) modules = result.data;
+    else if(result && Array.isArray(result.modules)) modules = result.modules;
+
+    if(modules && modules.length){
+      modules.forEach(mod => {
+        const name = mod.module || mod.name || mod.platform || mod.id || 'Module';
+        const found = (mod.status === 'found' || mod.found === true || mod.status === true);
+        const statusLabel = mod.status ? String(mod.status) : (found ? 'found' : 'not found');
+        const data = mod.data || mod.result || mod.details || mod;
+        results.appendChild(renderModuleCard(name, statusLabel, found, data, mod));
+      });
+      return;
+    }
+
+    if(result && typeof result === 'object' && !Array.isArray(result)){
+      const keys = Object.keys(result);
+      if(keys.length){
+        keys.forEach(key => {
+          const val = result[key];
+          const found = !(val === null || val === undefined || (Array.isArray(val) && val.length===0));
+          results.appendChild(renderModuleCard(key, found ? 'found' : 'not found', found, (typeof val === 'object') ? val : {value: val}, val));
+        });
+        return;
+      }
+    }
+
+    renderMessage('info', t('no_results_label'));
+  }
+
+  async function runSearch(){
+    const type = searchType.value;
+    const query = searchQuery.value.trim();
+    if(!query){ return; }
+    clearMessages();
+    results.innerHTML = '';
+    searchSubmit.disabled = true;
+    const originalLabel = searchSubmit.textContent;
+    searchSubmit.textContent = t('loading_label');
+
+    try{
+      const resp = await fetch('/api/search', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ password: sessionPassword, type, query, premium: premiumToggle.checked })
+      });
+      const data = await resp.json().catch(()=>({}));
+
+      if(resp.status === 401){
+        try{ sessionStorage.removeItem('sm_access_code'); }catch(e){}
+        gateWrap.style.display = 'flex';
+        searchApp.style.display = 'none';
+        gateError.style.display = 'block';
+        return;
+      }
+      if(resp.status === 402){ renderMessage('error', t('error_402')); return; }
+      if(resp.status === 400){ renderMessage('error', t('error_400')); return; }
+      if(resp.status === 500){ renderMessage('error', t('error_config')); return; }
+      if(!resp.ok){ renderMessage('error', (data && data.error) || t('error_generic')); return; }
+
+      renderResults(data);
+    }catch(e){
+      renderMessage('error', t('error_generic'));
+    }
+
+    searchSubmit.disabled = false;
+    searchSubmit.textContent = originalLabel;
+  }
+
+  searchSubmit.addEventListener('click', runSearch);
+  searchQuery.addEventListener('keydown', (e) => { if(e.key === 'Enter') runSearch(); });
+})();
+</script>
+</body>
+</html>
