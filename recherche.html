@@ -19,22 +19,101 @@
   .gate-box p{color:var(--muted); font-size:14px; margin-bottom:22px;}
   .gate-error{color:var(--magenta); font-size:13px; margin-top:10px; display:none;}
   #searchApp{display:none;}
-  .result-card{background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel2)); border:1px solid var(--border); padding:20px 22px; margin-bottom:16px;}
-  .result-card h4{font-family:var(--mono-display); color:var(--cyan-soft); text-transform:uppercase; letter-spacing:1px; font-size:14px; margin-bottom:10px;}
-  .kv{display:grid; grid-template-columns:180px 1fr; gap:6px 14px; font-size:13.5px; margin-bottom:4px;}
-  .kv .k{color:var(--muted);}
-  .kv .v{color:var(--text); word-break:break-word;}
-  .status-pill{display:inline-block; font-family:var(--mono-display); font-size:11px; letter-spacing:1px; padding:3px 9px; border:1px solid var(--border); text-transform:uppercase; margin-left:8px;}
+
+  /* ---------- Summary panel ---------- */
+  .summary-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px;}
+  .summary-card{background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel2)); border:1px solid var(--border); padding:20px 22px;}
+  .summary-card h5{font-family:var(--mono-display); color:var(--cyan-soft); text-transform:uppercase; letter-spacing:1px; font-size:13px; margin-bottom:14px;}
+  .summary-row{display:flex; gap:10px; margin-bottom:12px; align-items:flex-start;}
+  .summary-row .sk{min-width:110px; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:1px; padding-top:2px;}
+  .summary-row .sv{display:flex; flex-wrap:wrap; gap:6px;}
+  .avatar-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .avatar-row img{width:44px; height:44px; border-radius:6px; object-fit:cover; border:1px solid var(--border);}
+  .activity-list{max-height:280px; overflow-y:auto;}
+  .activity-row{display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); font-size:12.5px;}
+  .activity-row:last-child{border-bottom:none;}
+  .activity-row .amod{width:22px; height:22px; border-radius:4px; flex:none;}
+  .activity-row .adesc{flex:1; color:var(--text);}
+  .activity-row .adate{color:var(--muted); white-space:nowrap; font-family:var(--mono-display); font-size:11px;}
+  @media (max-width:860px){ .summary-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Module result card ---------- */
+  .result-card{background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel2)); border:1px solid var(--border); padding:20px 22px; margin-bottom:16px; position:relative;}
+  .mod-head{display:flex; align-items:center; gap:12px; margin-bottom:6px;}
+  .mod-icon{width:34px; height:34px; border-radius:7px; background:#0e0e24; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex:none; overflow:hidden;}
+  .mod-icon img{width:22px; height:22px; object-fit:contain;}
+  .mod-title{flex:1; min-width:0;}
+  .mod-title h4{font-family:var(--mono-display); color:#fff; text-transform:uppercase; letter-spacing:1px; font-size:15px;}
+  .status-pill{display:inline-block; font-family:var(--mono-display); font-size:10.5px; letter-spacing:1px; padding:3px 9px; border:1px solid var(--border); text-transform:uppercase; margin-left:8px; vertical-align:middle;}
   .status-found{color:var(--cyan); border-color:var(--blue);}
   .status-notfound{color:var(--muted);}
+  .badge-tag{display:inline-block; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--purple-dim); border:1px solid var(--purple-dim); background:rgba(139,47,255,0.08); padding:2px 8px; margin-right:6px; margin-bottom:4px; border-radius:3px;}
+
+  .chip-row{display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 4px;}
+  .chip{display:inline-flex; align-items:center; gap:4px; font-size:11.5px; padding:4px 10px; border:1px solid var(--border); border-radius:20px; color:var(--muted); background:rgba(255,255,255,0.02);}
+  .chip-true{color:var(--cyan-soft); border-color:var(--blue);}
+  .chip-false{color:var(--magenta); border-color:var(--magenta);}
+  .chip-link{color:var(--purple-dim); border-color:var(--purple-dim); text-decoration:none;}
+  .chip-link:hover{color:var(--cyan-soft); border-color:var(--blue);}
+
+  .field-row{display:grid; grid-template-columns:180px 1fr; gap:6px 14px; font-size:13.5px; padding:7px 0; border-bottom:1px solid rgba(28,28,64,0.6); align-items:center;}
+  .field-row:last-child{border-bottom:none;}
+  .field-row .fk{color:var(--muted);}
+  .field-row .fv{color:var(--text); word-break:break-word; text-align:right;}
+  .fv-pill{display:inline-block; border:1px solid var(--border); background:rgba(255,255,255,0.03); padding:3px 10px; border-radius:4px; color:var(--cyan-soft);}
+  .fv-datepair{display:inline-flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;}
+  .fv-datepair span{display:inline-block; border:1px solid var(--border); padding:3px 9px; border-radius:4px; font-family:var(--mono-display); font-size:11.5px;}
+  .fv-bool{display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:4px; border:1px solid var(--border); font-size:12px;}
+  .fv-bool.is-true{color:var(--cyan); border-color:var(--blue); background:rgba(20,224,255,0.08);}
+  .fv-bool.is-false{color:var(--magenta); border-color:var(--magenta); background:rgba(255,47,216,0.06);}
+  .fv-link{color:var(--cyan-soft); text-decoration:none; border:1px solid var(--border); padding:3px 9px; border-radius:4px; font-size:12px;}
+  .fv-link:hover{border-color:var(--blue);}
+  .fv-taglist{display:flex; flex-wrap:wrap; gap:5px; justify-content:flex-end;}
+  .fv-taglist span{border:1px solid var(--border); background:rgba(139,47,255,0.06); color:var(--purple-dim); font-size:11px; padding:2px 8px; border-radius:20px;}
+  .fv-json-flag{color:var(--muted); font-family:var(--mono-display); font-size:11px; letter-spacing:1px;}
+
+  .mod-body{display:flex; gap:20px;}
+  .mod-fields{flex:1; min-width:0;}
+  .mod-image{flex:none; width:120px;}
+  .mod-image img{width:120px; height:120px; object-fit:cover; border-radius:8px; border:1px solid var(--border);}
+
+  .expand-toggle{background:none; border:1px solid var(--border); color:var(--muted); font-family:var(--mono-display); font-size:11px; letter-spacing:1px; padding:6px 10px; cursor:pointer; margin-top:12px;}
+  .expand-toggle:hover{color:var(--cyan-soft); border-color:var(--blue);}
+  .extra-fields{display:none; margin-top:6px;}
+  .json-block{background:#000; border:1px solid var(--border); padding:12px 14px; font-size:11.5px; overflow-x:auto; margin-top:8px; color:var(--cyan-soft); border-radius:4px;}
+  .json-block .jk{color:var(--muted);}
+  .json-block .js{color:var(--cyan-soft);}
+  .json-block .jn{color:var(--purple-dim);}
+  .json-block .jb{color:var(--blue);}
+
   .json-toggle{background:none; border:1px solid var(--border); color:var(--muted); font-family:var(--mono-display); font-size:11px; letter-spacing:1px; padding:6px 10px; cursor:pointer; margin-top:10px;}
   .json-toggle:hover{color:var(--cyan-soft); border-color:var(--blue);}
   pre.raw-json{background:#000; border:1px solid var(--border); padding:16px; font-size:12px; overflow-x:auto; margin-top:10px; color:var(--cyan-soft); display:none;}
+
+  /* ---------- Breach table ---------- */
+  .breach-card{background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel2)); border:1px solid var(--border); padding:20px 22px; margin-bottom:16px;}
+  .breach-card h4{font-family:var(--mono-display); color:var(--magenta); text-transform:uppercase; letter-spacing:1px; font-size:14px; margin-bottom:4px;}
+  .breach-card > p{color:var(--muted); font-size:12.5px; margin-bottom:16px;}
+  table.breach-table{width:100%; border-collapse:collapse; font-size:12.5px;}
+  table.breach-table th{text-align:left; color:var(--muted); text-transform:uppercase; letter-spacing:1px; font-size:11px; padding:8px 10px; border-bottom:1px solid var(--border);}
+  table.breach-table td{padding:10px 10px; border-bottom:1px solid rgba(28,28,64,0.6); vertical-align:top;}
+  .breach-plat{display:flex; align-items:center; gap:8px;}
+  .breach-plat img{width:20px; height:20px; border-radius:4px;}
+  .breach-count{color:var(--magenta); font-family:var(--mono-display);}
+
   .banner-msg{border:1px solid var(--border); padding:14px 18px; font-size:13.5px; margin-bottom:20px;}
   .banner-msg.error{border-left:3px solid var(--magenta); color:var(--muted);}
   .banner-msg.info{border-left:3px solid var(--blue); color:var(--muted);}
   .search-row{display:grid; grid-template-columns:200px 1fr auto; gap:14px; align-items:end;}
-  @media (max-width:760px){ .search-row{grid-template-columns:1fr;} .kv{grid-template-columns:130px 1fr;} }
+  @media (max-width:760px){
+    .search-row{grid-template-columns:1fr;}
+    .field-row{grid-template-columns:130px 1fr;}
+    .field-row .fv{text-align:left;}
+    .fv-datepair, .fv-taglist{justify-content:flex-start;}
+    .mod-body{flex-direction:column;}
+    .mod-image{width:100%;}
+    .mod-image img{width:100%; height:auto; max-height:200px;}
+  }
 </style>
 </head>
 <body>
@@ -118,6 +197,7 @@
       </label>
 
       <div id="messages"></div>
+      <div id="summary"></div>
       <div id="results"></div>
     </div>
   </section>
@@ -140,6 +220,7 @@
   const gateSubmit = document.getElementById('gateSubmit');
   const gateError = document.getElementById('gateError');
   const messages = document.getElementById('messages');
+  const summaryEl = document.getElementById('summary');
   const results = document.getElementById('results');
   const searchSubmit = document.getElementById('searchSubmit');
   const searchType = document.getElementById('searchType');
@@ -208,7 +289,252 @@
   }
   function clearMessages(){ messages.innerHTML = ''; }
 
-  function flatten(obj, prefix){
+  /* ---------- module identity / icon helpers ---------- */
+  const MODULE_DOMAINS = {
+    google:'google.com', gmail:'google.com', maps:'google.com', youtube:'youtube.com',
+    microsoft:'microsoft.com', office365:'microsoft.com', outlook:'microsoft.com', skype:'skype.com', xbox:'xbox.com',
+    github:'github.com', gitlab:'gitlab.com', bitbucket:'bitbucket.org',
+    dropbox:'dropbox.com', paypal:'paypal.com', stripe:'stripe.com', venmo:'venmo.com',
+    airbnb:'airbnb.com', aliexpress:'aliexpress.com', alibaba:'alibaba.com', amazon:'amazon.com', ebay:'ebay.com', etsy:'etsy.com',
+    instagram:'instagram.com', facebook:'facebook.com', messenger:'messenger.com', whatsapp:'whatsapp.com',
+    twitter:'twitter.com', x:'x.com', linkedin:'linkedin.com', snapchat:'snapchat.com', tiktok:'tiktok.com',
+    telegram:'telegram.org', discord:'discord.com', spotify:'spotify.com', netflix:'netflix.com',
+    pinterest:'pinterest.com', reddit:'reddit.com', twitch:'twitch.tv', apple:'apple.com', yahoo:'yahoo.com',
+    wordpress:'wordpress.com', tumblr:'tumblr.com', vimeo:'vimeo.com', quora:'quora.com',
+    steam:'steampowered.com', epicgames:'epicgames.com', roblox:'roblox.com', imgur:'imgur.com',
+    hibp:'haveibeenpwned.com', haveibeenpwned:'haveibeenpwned.com', breach:'haveibeenpwned.com'
+  };
+  const MODULE_LABELS = {
+    hibp:'Have I Been Pwned', haveibeenpwned:'Have I Been Pwned', office365:'Microsoft', aliexpress:'AliExpress',
+    github:'GitHub', paypal:'PayPal', airbnb:'AirBnB', linkedin:'LinkedIn', tiktok:'TikTok', youtube:'YouTube',
+    whatsapp:'WhatsApp'
+  };
+  function normKey(mod){ return String(mod||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
+  function moduleDomain(mod){ const k = normKey(mod); return MODULE_DOMAINS[k] || (k ? k + '.com' : 'example.com'); }
+  function titleCase(str){
+    return String(str||'').replace(/[_\-]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\s+/g,' ').trim()
+      .replace(/\b\w/g, c => c.toUpperCase());
+  }
+  function moduleLabel(mod){ const k = normKey(mod); return MODULE_LABELS[k] || titleCase(mod || 'Module'); }
+  function iconHtml(mod){
+    const domain = escapeAttr(moduleDomain(mod));
+    return `<span class="mod-icon"><img src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" alt="" onerror="this.style.display='none'"></span>`;
+  }
+  function escapeAttr(str){ return String(str).replace(/"/g,'&quot;'); }
+  function isBreachModule(mod){
+    const k = normKey(mod && mod.module);
+    return k.includes('hibp') || k.includes('pwned') || k.includes('breach');
+  }
+
+  /* ---------- value type helpers ---------- */
+  const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/;
+  const PILL_KEYS = new Set(['id','name','first_name','last_name','username','login_id','name_hint','key','hash','account_id','user_id']);
+  function isIsoDate(val){ return typeof val === 'string' && ISO_DATE_RE.test(val); }
+  function formatDatePair(iso){
+    try{
+      const d = new Date(iso);
+      if(isNaN(d.getTime())) return null;
+      const datePart = d.toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
+      const timePart = d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+      const offsetMin = -d.getTimezoneOffset();
+      const sign = offsetMin >= 0 ? '+' : '-';
+      const abs = Math.abs(offsetMin);
+      const offset = `${sign}${String(Math.floor(abs/60)).padStart(2,'0')}:${String(abs%60).padStart(2,'0')}`;
+      return [datePart, `${timePart} ${offset}`];
+    }catch(e){ return null; }
+  }
+  function isUrl(val){ return typeof val === 'string' && /^https?:\/\//i.test(val); }
+  function syntaxHighlightJson(obj){
+    const json = escapeHtml(JSON.stringify(obj, null, 2));
+    return json.replace(/(&quot;.*?&quot;)(:?)/g, (m, str, colon) => {
+      const cls = colon ? 'jk' : 'js';
+      return `<span class="${cls}">${str}</span>${colon}`;
+    }).replace(/\b(true|false|null)\b/g, '<span class="jb">$1</span>')
+      .replace(/\b(-?\d+(\.\d+)?)\b/g, '<span class="jn">$1</span>');
+  }
+
+  /* ---------- spec_format field rendering ---------- */
+  function collectStandardFields(specFormat){
+    if(!specFormat || typeof specFormat !== 'object') return { std: [], extra: [] };
+    if(Array.isArray(specFormat)){
+      // some responses give spec_format as an array of {proper_key,value,type,platform_variables}
+      let std = [], extra = [];
+      specFormat.forEach(entry => {
+        std = std.concat(flattenSpecEntry(entry));
+        if(entry && Array.isArray(entry.platform_variables)) extra = extra.concat(entry.platform_variables);
+        else if(entry && entry.platform_variables && typeof entry.platform_variables === 'object'){
+          extra = extra.concat(Object.values(entry.platform_variables));
+        }
+      });
+      return { std, extra };
+    }
+    // object keyed by attribute name -> {proper_key, value, type}
+    const std = [];
+    let extra = [];
+    Object.keys(specFormat).forEach(key => {
+      if(key === 'platform_variables'){
+        const pv = specFormat[key];
+        if(Array.isArray(pv)) extra = extra.concat(pv);
+        else if(pv && typeof pv === 'object') extra = extra.concat(Object.values(pv));
+        return;
+      }
+      const entry = specFormat[key];
+      if(entry && typeof entry === 'object' && 'value' in entry) std.push(entry);
+    });
+    return { std, extra };
+  }
+  function flattenSpecEntry(entry){
+    if(!entry || typeof entry !== 'object') return [];
+    if('value' in entry) return [entry];
+    return [];
+  }
+
+  function renderFieldValue(entry){
+    const key = entry.proper_key || titleCase(entry.key || 'Value');
+    const type = entry.type;
+    let val = entry.value;
+    const nk = key.toLowerCase().replace(/\s+/g,'_');
+    if(val === null || val === undefined || val === '') return null;
+    if(Array.isArray(val) && val.length === 0) return null;
+
+    // boolean
+    if(type === 'bool' || typeof val === 'boolean'){
+      const cls = val ? 'is-true' : 'is-false';
+      return { label: key, html: `<span class="fv-bool ${cls}">${val ? '✓' : '✗'}</span>` };
+    }
+    // date/time
+    if(type === 'datetime' || isIsoDate(val)){
+      const pair = formatDatePair(val);
+      if(pair){
+        return { label: key, html: `<span class="fv-datepair"><span>${escapeHtml(pair[0])}</span><span>${escapeHtml(pair[1])}</span></span>` };
+      }
+    }
+    // link / url
+    if(isUrl(val)){
+      const isImage = /picture|banner|avatar|photo|image/.test(nk);
+      return { label: key, html: `<a class="fv-link" href="${escapeAttr(val)}" target="_blank" rel="noopener noreferrer">↗</a>`, imageUrl: isImage ? val : null, linkUrl: val };
+    }
+    // simple list of scalars -> tag list
+    if(Array.isArray(val) && val.every(v => typeof v !== 'object')){
+      const items = val.slice(0, 12).map(v => `<span>${escapeHtml(v)}</span>`).join('');
+      return { label: key, html: `<span class="fv-taglist">${items}</span>` };
+    }
+    // nested object/array -> JSON flag, rendered in the json accordion
+    if(typeof val === 'object'){
+      return { label: key, html: `<span class="fv-json-flag">JSON</span>`, json: val, jsonLabel: key };
+    }
+    // scalar string/number
+    const isPill = PILL_KEYS.has(nk) || PILL_KEYS.has(nk.replace(/s$/,''));
+    const text = escapeHtml(val);
+    return { label: key, html: isPill ? `<span class="fv-pill">${text}</span>` : text };
+  }
+
+  function renderModuleCard(mod){
+    const moduleKey = mod.module || mod.name || mod.platform || mod.id || 'module';
+    const label = moduleLabel(moduleKey);
+    const found = (mod.status === 'found' || mod.found === true || mod.status === true);
+    const statusLabel = mod.status ? String(mod.status) : (found ? 'found' : 'not found');
+    const statusClass = found ? 'status-found' : 'status-notfound';
+
+    const card = document.createElement('div');
+    card.className = 'result-card';
+
+    const specSrc = mod.spec_format || mod.pretty_data || null;
+    let std = [], extra = [];
+    if(specSrc){
+      const collected = collectStandardFields(specSrc);
+      std = collected.std; extra = collected.extra;
+    }
+
+    let bodyHtml = '';
+    let imageUrl = null;
+    const rowParts = [];
+    const jsonBlocks = [];
+
+    if(std.length || extra.length){
+      std.forEach(entry => {
+        const rendered = renderFieldValue(entry);
+        if(!rendered) return;
+        if(rendered.imageUrl && !imageUrl) imageUrl = rendered.imageUrl;
+        if(rendered.json){ jsonBlocks.push({label: rendered.jsonLabel, data: rendered.json}); }
+        rowParts.push(`<div class="field-row"><div class="fk">${escapeHtml(rendered.label)}</div><div class="fv">${rendered.html}</div></div>`);
+      });
+
+      const extraRows = [];
+      extra.forEach(entry => {
+        const rendered = renderFieldValue(entry);
+        if(!rendered) return;
+        if(rendered.imageUrl && !imageUrl) imageUrl = rendered.imageUrl;
+        if(rendered.json){ jsonBlocks.push({label: rendered.jsonLabel, data: rendered.json}); }
+        extraRows.push(`<div class="field-row"><div class="fk">${escapeHtml(rendered.label)}</div><div class="fv">${rendered.html}</div></div>`);
+      });
+
+      bodyHtml = rowParts.join('');
+      if(extraRows.length){
+        bodyHtml += `<button type="button" class="expand-toggle" data-expand>${t('expand_fields_label').replace('{n}', extraRows.length)}</button>`;
+        bodyHtml += `<div class="extra-fields">${extraRows.join('')}</div>`;
+      }
+    } else {
+      // legacy fallback: flatten whatever raw object we got
+      const raw = mod.data || mod.result || mod.details || mod;
+      legacyFlatten(raw).slice(0, 60).forEach(([k, v]) => {
+        if(isUrl(v)){
+          rowParts.push(`<div class="field-row"><div class="fk">${escapeHtml(k)}</div><div class="fv"><a class="fv-link" href="${escapeAttr(v)}" target="_blank" rel="noopener noreferrer">↗</a></div></div>`);
+        } else {
+          rowParts.push(`<div class="field-row"><div class="fk">${escapeHtml(k)}</div><div class="fv">${escapeHtml(v)}</div></div>`);
+        }
+      });
+      bodyHtml = rowParts.join('');
+    }
+
+    const imageHtml = imageUrl ? `<div class="mod-image"><img src="${escapeAttr(imageUrl)}" alt="" onerror="this.parentElement.style.display='none'"></div>` : '';
+
+    card.innerHTML = `
+      <div class="mod-head">
+        ${iconHtml(moduleKey)}
+        <div class="mod-title"><h4>${escapeHtml(label)}<span class="status-pill ${statusClass}">${escapeHtml(statusLabel)}</span></h4></div>
+      </div>
+      <div class="mod-body">
+        <div class="mod-fields">${bodyHtml || `<p style="color:var(--muted); font-size:13px;">${escapeHtml(t('no_results_label'))}</p>`}</div>
+        ${imageHtml}
+      </div>
+    `;
+
+    const expandBtn = card.querySelector('[data-expand]');
+    if(expandBtn){
+      const extraWrap = card.querySelector('.extra-fields');
+      const totalExtra = extraWrap ? extraWrap.children.length : 0;
+      expandBtn.addEventListener('click', () => {
+        const showing = extraWrap.style.display === 'block';
+        extraWrap.style.display = showing ? 'none' : 'block';
+        expandBtn.textContent = showing ? t('expand_fields_label').replace('{n}', totalExtra) : t('collapse_fields_label');
+      });
+    }
+
+    jsonBlocks.forEach(block => {
+      const wrap = document.createElement('div');
+      wrap.className = 'json-block';
+      wrap.innerHTML = syntaxHighlightJson(block.data);
+      card.querySelector('.mod-fields').appendChild(wrap);
+    });
+
+    const toggle = document.createElement('button');
+    toggle.className = 'json-toggle';
+    toggle.textContent = t('raw_json_label');
+    const pre = document.createElement('pre');
+    pre.className = 'raw-json';
+    pre.textContent = JSON.stringify(mod, null, 2);
+    toggle.addEventListener('click', () => {
+      const showing = pre.style.display === 'block';
+      pre.style.display = showing ? 'none' : 'block';
+      toggle.textContent = showing ? t('raw_json_label') : t('hide_json_label');
+    });
+    card.appendChild(toggle);
+    card.appendChild(pre);
+    return card;
+  }
+
+  function legacyFlatten(obj, prefix){
     let rows = [];
     if(obj === null || obj === undefined) return rows;
     if(typeof obj !== 'object'){
@@ -221,14 +547,14 @@
         rows.push([prefix || 'value', obj.join(', ')]);
         return rows;
       }
-      obj.forEach((item, i) => { rows = rows.concat(flatten(item, prefix ? `${prefix}[${i}]` : `[${i}]`)); });
+      obj.forEach((item, i) => { rows = rows.concat(legacyFlatten(item, prefix ? `${prefix}[${i}]` : `[${i}]`)); });
       return rows;
     }
     Object.keys(obj).forEach(key => {
       const val = obj[key];
       const label = prefix ? `${prefix}.${key}` : key;
       if(val !== null && typeof val === 'object'){
-        rows = rows.concat(flatten(val, label));
+        rows = rows.concat(legacyFlatten(val, label));
       } else {
         rows.push([label, val]);
       }
@@ -236,42 +562,117 @@
     return rows;
   }
 
-  function renderModuleCard(name, statusLabel, foundBool, dataObj, rawObj){
-    const card = document.createElement('div');
-    card.className = 'result-card';
-    const statusClass = foundBool ? 'status-found' : 'status-notfound';
-    card.innerHTML = `<h4>${escapeHtml(name)}<span class="status-pill ${statusClass}">${escapeHtml(statusLabel)}</span></h4>`;
+  /* ---------- breach (HaveIBeenPwned) table ---------- */
+  function renderBreachTable(mod){
+    const list = Array.isArray(mod.data) ? mod.data
+      : (Array.isArray(mod.pretty_data) ? mod.pretty_data
+      : (Array.isArray(mod.result) ? mod.result : null));
+    if(!list || !list.length) return null;
 
-    const rows = flatten(dataObj || {});
-    if(rows.length){
-      const kvWrap = document.createElement('div');
-      rows.slice(0, 40).forEach(([k,v]) => {
-        const row = document.createElement('div');
-        row.className = 'kv';
-        row.innerHTML = `<div class="k">${escapeHtml(k)}</div><div class="v">${escapeHtml(v)}</div>`;
-        kvWrap.appendChild(row);
+    const rows = list.map(entry => {
+      const name = entry.Name || entry.name || entry.Title || entry.title || 'Unknown';
+      const domain = entry.Domain || entry.domain || '';
+      const date = entry.BreachDate || entry.breach_date || entry.date || '';
+      const count = entry.PwnCount || entry.pwn_count || entry.affected_users || entry.AffectedUsers;
+      const fields = entry.DataClasses || entry.data_classes || entry.compromised_fields || entry.CompromisedFields || [];
+      const logo = entry.LogoPath || entry.logo || entry.logo_url || `https://www.google.com/s2/favicons?domain=${escapeAttr(domain || name)}&sz=64`;
+      return `<tr>
+        <td><div class="breach-plat"><img src="${escapeAttr(logo)}" alt="" onerror="this.style.display='none'"><div><div>${escapeHtml(name)}</div>${domain ? `<div style="color:var(--muted); font-size:11px;">${escapeHtml(domain)}</div>` : ''}</div></div></td>
+        <td class="breach-count">${count ? escapeHtml(Number(count).toLocaleString()) : '—'}</td>
+        <td>${date ? escapeHtml(new Date(date).toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'})) : '—'}</td>
+        <td>${Array.isArray(fields) ? escapeHtml(fields.join(', ')) : escapeHtml(fields)}</td>
+      </tr>`;
+    }).join('');
+
+    const card = document.createElement('div');
+    card.className = 'breach-card';
+    card.innerHTML = `
+      <h4>${escapeHtml(t('breach_title'))}</h4>
+      <p>${escapeHtml(t('breach_sub'))}</p>
+      <table class="breach-table">
+        <thead><tr>
+          <th>${escapeHtml(t('breach_col_platform'))}</th>
+          <th>${escapeHtml(t('breach_col_affected'))}</th>
+          <th>${escapeHtml(t('breach_col_date'))}</th>
+          <th>${escapeHtml(t('breach_col_fields'))}</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+    return card;
+  }
+
+  /* ---------- "What We Know" summary panel ---------- */
+  function buildSummary(modules){
+    const names = new Set(), usernames = new Set(), emails = new Set(), phones = new Set(),
+      locations = new Set(), images = [];
+    const activity = [];
+
+    modules.forEach(mod => {
+      if(isBreachModule(mod)) return;
+      const specSrc = mod.spec_format || mod.pretty_data || null;
+      if(!specSrc) return;
+      const { std, extra } = collectStandardFields(specSrc);
+      const label = moduleLabel(mod.module || mod.name);
+      std.concat(extra).forEach(entry => {
+        if(!entry || entry.value === null || entry.value === undefined || entry.value === '') return;
+        const key = (entry.proper_key || '').toLowerCase().replace(/\s+/g,'_');
+        const val = entry.value;
+        if((key === 'name' || key === 'first_name' || key === 'last_name') && typeof val === 'string') names.add(val);
+        if(key === 'username' && typeof val === 'string') usernames.add(val);
+        if(key === 'email' && typeof val === 'string') String(val).split(',').forEach(e => emails.add(e.trim()));
+        if(key === 'phone' && typeof val === 'string') String(val).split(',').forEach(p => phones.add(p.trim()));
+        if(key === 'location' && typeof val === 'string') locations.add(val);
+        if((key === 'picture_url' || key === 'banner_url' || key === 'avatar_url') && isUrl(val) && images.length < 8) images.push(val);
+        if((key === 'creation_date' || key === 'last_seen') && isIsoDate(val)){
+          activity.push({ module: label, moduleKey: mod.module || mod.name, desc: key === 'last_seen' ? 'Last seen' : 'Account created', date: val });
+        }
       });
-      card.appendChild(kvWrap);
+    });
+
+    if(!names.size && !usernames.size && !emails.size && !phones.size && !locations.size && !images.length && !activity.length){
+      summaryEl.innerHTML = '';
+      return;
     }
 
-    const toggle = document.createElement('button');
-    toggle.className = 'json-toggle';
-    toggle.textContent = t('raw_json_label');
-    const pre = document.createElement('pre');
-    pre.className = 'raw-json';
-    pre.textContent = JSON.stringify(rawObj, null, 2);
-    toggle.addEventListener('click', () => {
-      const showing = pre.style.display === 'block';
-      pre.style.display = showing ? 'none' : 'block';
-      toggle.textContent = showing ? t('raw_json_label') : t('hide_json_label');
-    });
-    card.appendChild(toggle);
-    card.appendChild(pre);
-    return card;
+    activity.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+    function chipSet(set){
+      return Array.from(set).slice(0, 10).map(v => `<span class="chip">${escapeHtml(v)}</span>`).join('') || `<span style="color:var(--muted); font-size:12px;">—</span>`;
+    }
+
+    const pivotRows = [
+      names.size ? `<div class="summary-row"><div class="sk">${escapeHtml(t('summary_names'))}</div><div class="sv">${chipSet(names)}</div></div>` : '',
+      usernames.size ? `<div class="summary-row"><div class="sk">${escapeHtml(t('summary_usernames'))}</div><div class="sv">${chipSet(usernames)}</div></div>` : '',
+      emails.size ? `<div class="summary-row"><div class="sk">${escapeHtml(t('summary_emails'))}</div><div class="sv">${chipSet(emails)}</div></div>` : '',
+      phones.size ? `<div class="summary-row"><div class="sk">${escapeHtml(t('summary_phones'))}</div><div class="sv">${chipSet(phones)}</div></div>` : '',
+      locations.size ? `<div class="summary-row"><div class="sk">${escapeHtml(t('summary_locations'))}</div><div class="sv">${chipSet(locations)}</div></div>` : '',
+    ].join('');
+
+    const imagesRow = images.length ? `<div class="summary-row"><div class="sk">Images</div><div class="avatar-row">${images.map(u => `<img src="${escapeAttr(u)}" alt="" onerror="this.style.display='none'">`).join('')}</div></div>` : '';
+
+    const activityHtml = activity.slice(0, 20).map(a => `
+      <div class="activity-row">
+        <img class="amod" src="https://www.google.com/s2/favicons?domain=${escapeAttr(moduleDomain(a.moduleKey))}&sz=64" alt="" onerror="this.style.display='none'">
+        <div class="adesc"><strong>${escapeHtml(a.module)}</strong> — ${escapeHtml(a.desc)}</div>
+        <div class="adate">${escapeHtml(new Date(a.date).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}))}</div>
+      </div>`).join('');
+
+    summaryEl.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card">
+          <h5>${escapeHtml(t('summary_pivots_title'))}</h5>
+          ${pivotRows}${imagesRow}
+        </div>
+        <div class="summary-card">
+          <h5>${escapeHtml(t('summary_activity_title'))}</h5>
+          <div class="activity-list">${activityHtml || `<span style="color:var(--muted); font-size:12px;">—</span>`}</div>
+        </div>
+      </div>`;
   }
 
   function renderResults(payload){
     results.innerHTML = '';
+    summaryEl.innerHTML = '';
     const result = payload && payload.result;
 
     let modules = null;
@@ -280,12 +681,13 @@
     else if(result && Array.isArray(result.modules)) modules = result.modules;
 
     if(modules && modules.length){
+      buildSummary(modules);
       modules.forEach(mod => {
-        const name = mod.module || mod.name || mod.platform || mod.id || 'Module';
-        const found = (mod.status === 'found' || mod.found === true || mod.status === true);
-        const statusLabel = mod.status ? String(mod.status) : (found ? 'found' : 'not found');
-        const data = mod.data || mod.result || mod.details || mod;
-        results.appendChild(renderModuleCard(name, statusLabel, found, data, mod));
+        if(isBreachModule(mod)){
+          const table = renderBreachTable(mod);
+          if(table){ results.appendChild(table); return; }
+        }
+        results.appendChild(renderModuleCard(mod));
       });
       return;
     }
@@ -296,7 +698,8 @@
         keys.forEach(key => {
           const val = result[key];
           const found = !(val === null || val === undefined || (Array.isArray(val) && val.length===0));
-          results.appendChild(renderModuleCard(key, found ? 'found' : 'not found', found, (typeof val === 'object') ? val : {value: val}, val));
+          const pseudoMod = { module: key, status: found ? 'found' : 'not found', data: (typeof val === 'object') ? val : {value: val} };
+          results.appendChild(renderModuleCard(pseudoMod));
         });
         return;
       }
