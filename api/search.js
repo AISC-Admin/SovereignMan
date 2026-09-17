@@ -9,6 +9,8 @@
 //
 // Endpoint documentation: https://docs.osint.industries/reference/search
 
+const { recordSearchAndMaybeAlert } = require('./_quota');
+
 const ALLOWED_TYPES = ['email', 'phone', 'username', 'name', 'wallet'];
 
 function getValidCodes() {
@@ -56,6 +58,10 @@ module.exports = async (req, res) => {
   const params = new URLSearchParams({ type, query: query.trim() });
   if (premium) params.set('premium', 'true');
 
+  // Fired in parallel with the upstream call below (not sequentially) so the monthly
+  // per-code quota counter/alert email never adds noticeable latency to the search itself.
+  const quotaPromise = recordSearchAndMaybeAlert(password);
+
   try {
     const upstream = await fetch(`https://api.osint.industries/v2/request?${params.toString()}`, {
       method: 'GET',
@@ -67,6 +73,7 @@ module.exports = async (req, res) => {
     try { data = JSON.parse(text); } catch (e) { data = { raw: text }; }
 
     if (!upstream.ok) {
+      await quotaPromise;
       res.status(upstream.status).json({
         error: `OSINT Industries API error (HTTP ${upstream.status})`,
         details: data
@@ -74,8 +81,10 @@ module.exports = async (req, res) => {
       return;
     }
 
+    await quotaPromise;
     res.status(200).json({ ok: true, result: data });
   } catch (err) {
+    await quotaPromise;
     res.status(502).json({ error: 'Failed to reach the OSINT Industries API', details: String(err) });
   }
 };
