@@ -38,8 +38,16 @@
   /* ---------- Face search panel ---------- */
   .face-panel{border-top:1px solid var(--border); padding-top:40px; margin-top:10px;}
   .face-panel-inner{max-width:760px;}
-  .face-row{display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:14px; align-items:end; margin:18px 0;}
-  @media (max-width:860px){ .face-row{grid-template-columns:1fr;} }
+  .face-panel-inner .tag{margin-bottom:14px;}
+  .face-panel-inner h3{font-family:var(--mono-display); font-size:20px; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;}
+  .face-desc{color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:26px; max-width:640px;}
+  .face-mode-row{max-width:360px; margin-bottom:18px;}
+  .face-row{display:grid; grid-template-columns:repeat(2, minmax(200px, 1fr)) auto; gap:16px 24px; align-items:end; margin-bottom:18px;}
+  .face-row .field{min-height:64px; justify-content:flex-end;}
+  @media (max-width:700px){
+    .face-row{grid-template-columns:1fr;}
+    .face-row .field button{margin-top:6px;}
+  }
 
   /* ---------- Summary panel ---------- */
   .summary-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px;}
@@ -235,15 +243,15 @@
       <div class="face-panel-inner">
         <span class="tag" data-i18n="face_tag">Beta — accessory</span>
         <h3 data-i18n="face_title">Facial recognition (CompreFace)</h3>
-        <p class="source-hint" data-i18n="face_desc">Compares two photos, or matches one photo against your own enrolled collection. This does NOT search the public web for a face — see SETUP-RECHERCHE.md. Requires a self-hosted CompreFace server and is off until FACE_SEARCH_ENABLED is set.</p>
+        <p class="face-desc" data-i18n="face_desc">Compares two photos, or matches one photo against your own enrolled collection. This does NOT search the public web for a face — see SETUP-RECHERCHE.md. Requires a self-hosted CompreFace server and is off until FACE_SEARCH_ENABLED is set.</p>
+        <div class="field face-mode-row">
+          <label for="faceModeSelect" data-i18n="face_mode_label">Mode</label>
+          <select id="faceModeSelect">
+            <option value="verify" data-i18n="face_mode_verify">Verify — compare two photos</option>
+            <option value="recognize" data-i18n="face_mode_recognize">Recognize — match against your collection</option>
+          </select>
+        </div>
         <div class="face-row">
-          <div class="field">
-            <label for="faceModeSelect" data-i18n="face_mode_label">Mode</label>
-            <select id="faceModeSelect">
-              <option value="verify" data-i18n="face_mode_verify">Verify — compare two photos</option>
-              <option value="recognize" data-i18n="face_mode_recognize">Recognize — match against your collection</option>
-            </select>
-          </div>
           <div class="field">
             <label for="faceImage1" data-i18n="face_image1_label">Photo 1</label>
             <input type="file" id="faceImage1" accept="image/*">
@@ -384,14 +392,14 @@
     wordpress:'wordpress.com', tumblr:'tumblr.com', vimeo:'vimeo.com', quora:'quora.com',
     steam:'steampowered.com', epicgames:'epicgames.com', roblox:'roblox.com', imgur:'imgur.com',
     hibp:'haveibeenpwned.com', haveibeenpwned:'haveibeenpwned.com', breach:'haveibeenpwned.com',
-    entreprisefr:'data.gouv.fr', gleif:'gleif.org', icijoffshoreleaks:'icij.org', pappers:'pappers.fr'
+    entreprisefr:'data.gouv.fr', gleif:'gleif.org', icijoffshoreleaks:'icij.org', pappers:'pappers.fr', zefix:'zefix.ch'
   };
   const MODULE_LABELS = {
     hibp:'Have I Been Pwned', haveibeenpwned:'Have I Been Pwned', office365:'Microsoft', aliexpress:'AliExpress',
     github:'GitHub', paypal:'PayPal', airbnb:'AirBnB', linkedin:'LinkedIn', tiktok:'TikTok', youtube:'YouTube',
     whatsapp:'WhatsApp',
     entreprisefr:'Registre des entreprises (France)', gleif:'GLEIF — Identifiant LEI', icijoffshoreleaks:'ICIJ Offshore Leaks',
-    pappers:'Pappers — Registre légal & financier'
+    pappers:'Pappers — Registre légal & financier', zefix:'Zefix — Registre du commerce (Suisse)'
   };
   function normKey(mod){ return String(mod||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
   function moduleDomain(mod){ const k = normKey(mod); return MODULE_DOMAINS[k] || (k ? k + '.com' : 'example.com'); }
