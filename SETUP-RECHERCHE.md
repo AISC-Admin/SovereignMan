@@ -43,11 +43,42 @@ vercel dev
 
 ## Sécurité — points importants
 
+- Un bouton **// Log out** a été ajouté en haut de la page (une fois déverrouillée) : il efface le code d'accès stocké dans le navigateur (`sessionStorage`) et ramène immédiatement à l'écran de saisie du code. Utile sur un poste partagé.
 - Le mot de passe est vérifié **côté serveur** à chaque recherche, pas seulement à l'écran d'accueil : même en contournant l'interface, personne ne peut appeler `/api/search` sans le bon code.
 - La page est marquée `noindex, nofollow` pour ne pas apparaître dans les moteurs de recherche, et n'est pas mise en avant comme un service public — c'est un outil interne.
 - Il n'y a pas de limitation de débit (rate limiting) persistante : les fonctions serverless Vercel sont sans état. Si l'un des 9 codes fuite, il pourrait être utilisé pour épuiser vos crédits jusqu'à ce que vous le retiriez de `SEARCH_TOOL_PASSWORDS`. Pour un vrai rate limiting partagé (ex. limiter chaque code à N recherches/jour), il faudrait ajouter une base comme Vercel KV ou Upstash — je peux l'ajouter si besoin.
 - Ces codes sont numériques à 6 chiffres : suffisants pour dissuader un visiteur occasionnel, mais pas conçus pour résister à un bot qui tenterait des combinaisons en masse. Comme il n'y a pas de limite de tentatives sur `/api/auth`, un mot de passe alphanumérique plus long serait plus robuste si l'outil devait un jour être exposé plus largement — dites-le-moi si vous voulez que j'ajoute un verrouillage après plusieurs échecs.
 - Ne committez jamais `.env.local` dans Git (déjà exclu via `.gitignore`).
+
+## 6. Recherche "Entreprise / entité" (nouveau, sans clé pour 3 des 4 sources)
+
+Un nouveau type de recherche **Entreprise / entité** a été ajouté (`/api/entity-search.js`). Il interroge en parallèle :
+
+| Source | Clé requise ? | Donnée |
+|---|---|---|
+| Registre des entreprises françaises (data.gouv.fr) | Non | SIREN, dirigeants, adresse, statut |
+| GLEIF | Non | Identifiant LEI, forme juridique, adresse |
+| ICIJ Offshore Leaks | Non (attribution obligatoire, licence ODbL/CC BY-SA — déjà affichée sur la page) | Entités liées aux Panama/Paradise/Pandora Papers etc. |
+| Pappers | **Oui** — `PAPPERS_API_KEY` | Données légales et financières enrichies (CA, dirigeants détaillés, KBIS) |
+
+Les trois premières fonctionnent immédiatement, sans rien configurer. Pappers s'active automatiquement dès que `PAPPERS_API_KEY` est définie dans Vercel (Settings → Environment Variables) — si elle est absente, ce module est simplement ignoré, le reste continue de fonctionner normalement. Redéployez après avoir ajouté la variable.
+
+## 7. Reconnaissance faciale (bêta, désactivée par défaut)
+
+Un panneau "Reconnaissance faciale (CompreFace)" a été préparé en bas de la page (`/api/face-search.js`), mais **reste désactivé** tant que vous n'avez pas fait les deux choses suivantes :
+
+1. **Déployer votre propre serveur CompreFace** ([exadel-inc/CompreFace](https://github.com/exadel-inc/CompreFace), Docker) sur un hébergeur qui garde un processus permanent — Fly.io, Railway, une VPS. Ce n'est pas possible sur Vercel (serverless). CompreFace génère sa propre clé API locale depuis son interface d'administration — il n'y a pas de fournisseur tiers à qui la demander.
+2. **Obtenir un avis juridique avant l'activation.** Faire correspondre des visages pour identifier une personne relève du traitement de données biométriques (article 9 du RGPD), interdit par défaut sauf base légale précise. Pour un outil public opéré depuis l'Estonie, cela nécessite très probablement une analyse d'impact (AIPD) et un avis juridique documenté.
+
+Une fois ces deux étapes faites, activez la fonctionnalité en ajoutant dans Vercel :
+
+| Nom | Valeur |
+|---|---|
+| `FACE_SEARCH_ENABLED` | `true` |
+| `COMPREFACE_URL` | l'URL de votre serveur CompreFace |
+| `COMPREFACE_API_KEY` | la clé générée par CompreFace lui-même (pas par nous) |
+
+**Important à comprendre** : CompreFace ne recherche pas un visage sur le web public comme le ferait un service commercial (PimEyes, FaceCheck.id). Il ne fait que comparer deux photos entre elles ("Verify"), ou comparer une photo à une collection de visages que *vous* avez vous-même enregistrés au préalable dans CompreFace ("Recognize"). Ce n'est pas un moteur de recherche de visages sur Internet.
 
 ## Format de réponse de l'API
 
