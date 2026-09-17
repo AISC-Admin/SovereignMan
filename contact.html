@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — SovereignMan OÜ</title>
+<meta name="description" content="Get in touch with SovereignMan OÜ to start a confidential OSINT, financial forensics or cyber-investigation engagement.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+<div class="grain"></div>
+<div class="scanline"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="bracket">[</span>SOVEREIGNMAN<span class="bracket">]</span><span class="cursor"></span></div>
+    <div class="nav-right">
+      <nav>
+        <ul id="navlist">
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+          <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+          <li><a href="expertise.html" data-i18n="nav_expertise">Expertise</a></li>
+          <li><a href="contact.html" class="active" data-i18n="nav_contact">Contact</a></li>
+          <li class="lang-switch">
+            <button data-lang="en">EN</button><button data-lang="et">ET</button><button data-lang="fr">FR</button><button data-lang="ru">RU</button>
+          </li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" id="navToggle" data-i18n="menu_label">[ MENU ]</button>
+    </div>
+  </div>
+</header>
+
+<header class="page-hero">
+  <div class="container">
+    <span class="tag" data-i18n="page_contact_tag">Get in Touch</span>
+    <h1 class="section-title" data-i18n="page_contact_title">Start a Case</h1>
+    <p class="section-sub" data-i18n="page_contact_sub">Every request is handled in strict confidence. Please do not share sensitive information before a contractual framework is in place.</p>
+  </div>
+</header>
+
+<section style="border-top:none; padding-top:0;">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div>
+          <div class="k" data-i18n="label_email">Email</div>
+          <div class="v"><a href="mailto:contact@sovereignman.ee">contact@sovereignman.ee</a></div>
+        </div>
+        <div>
+          <div class="k" data-i18n="label_office">Registered Office</div>
+          <div class="v">Parda tn 3, Kesklinna linnaosa,<br>10151 Tallinn, Estonia</div>
+        </div>
+        <div>
+          <div class="k" data-i18n="label_registry">Registry</div>
+          <div class="v">No. 16797348 — VAT EE102646003</div>
+        </div>
+        <div>
+          <div class="k" data-i18n="label_avail">Availability</div>
+          <div class="v" data-i18n="value_avail">By mandate — response within 48 business hours</div>
+        </div>
+      </div>
+
+      <form action="https://formsubmit.co/unknown-janus-deus@proton.me" method="POST">
+        <!-- FormSubmit configuration: routes every submission to the case-intake inbox -->
+        <input type="hidden" name="_subject" value="New case request — SovereignMan.ee">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="sent.html">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="field">
+          <label for="name" data-i18n="form_name">Name / Organization</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="email" data-i18n="form_email">Professional Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="type" data-i18n="form_type">Nature of request</label>
+          <select id="type" name="type">
+            <option data-i18n="opt1">OSINT Intelligence</option>
+            <option data-i18n="opt2">Financial / Forensic Analysis</option>
+            <option data-i18n="opt3">Cyber-Investigation</option>
+            <option data-i18n="opt4">Institutional / Government Cooperation</option>
+            <option data-i18n="opt5">Secure Application Development</option>
+            <option data-i18n="opt6">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message" data-i18n="form_message">Message</label>
+          <textarea id="message" name="message" required data-i18n-placeholder="form_placeholder" placeholder="Describe the context of your request, without sensitive data at this stage."></textarea>
+        </div>
+        <button type="submit" class="btn" data-i18n="form_submit">// Submit request</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-row">
+    <div id="footerCopy">© 2026 SovereignMan OÜ — Tallinn, Estonia — Reg. No. 16797348</div>
+    <div><a href="#top" data-i18n="footer_top">Back to top ↑</a></div>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>
