@@ -60,8 +60,15 @@ Un nouveau type de recherche **Entreprise / entité** a été ajouté (`/api/ent
 | GLEIF | Non | Identifiant LEI, forme juridique, adresse |
 | ICIJ Offshore Leaks | Non (attribution obligatoire, licence ODbL/CC BY-SA — déjà affichée sur la page) | Entités liées aux Panama/Paradise/Pandora Papers etc. |
 | Pappers | **Oui** — `PAPPERS_API_KEY` | Données légales et financières enrichies (CA, dirigeants détaillés, KBIS) |
+| Zefix (Suisse) | **Oui, mais gratuite** — `ZEFIX_USERNAME` + `ZEFIX_PASSWORD` | Registre fédéral suisse du commerce (UID/CHE, forme juridique, siège, statut) |
 
-Les trois premières fonctionnent immédiatement, sans rien configurer. Pappers s'active automatiquement dès que `PAPPERS_API_KEY` est définie dans Vercel (Settings → Environment Variables) — si elle est absente, ce module est simplement ignoré, le reste continue de fonctionner normalement. Redéployez après avoir ajouté la variable.
+Les trois premières fonctionnent immédiatement, sans rien configurer. Pappers et Zefix s'activent automatiquement dès que leurs variables sont définies dans Vercel (Settings → Environment Variables) — si elles sont absentes, ces modules sont simplement ignorés, le reste continue de fonctionner normalement. Redéployez après avoir ajouté des variables.
+
+**Pour Zefix** : créez un compte gratuit sur [zefix.admin.ch](https://www.zefix.admin.ch) (aucun contrat payant, juste une inscription en libre-service) pour obtenir votre identifiant/mot de passe. C'est actuellement la seule source de ce lot avec une vraie API publique gratuite de bout en bout.
+
+**Point de transparence** : je n'ai pas pu exécuter d'appel réel vers l'API Zefix depuis cet environnement pour vérifier les noms exacts des champs de la réponse (documentation Swagger bloquée par robots.txt aux outils que j'utilise). Le module a été codé de façon tolérante (comme le reste de l'outil : bouton "Voir le JSON brut" toujours disponible sur chaque carte), mais après votre première vraie recherche une fois les identifiants configurés, montrez-moi un exemple de réponse si un champ affiche des valeurs manquantes ou mal étiquetées — j'ajusterai le mapping.
+
+**Sur l'Arabie Saoudite (Wathq) et Israël (data.gov.il)** demandés également : ces deux ont un signal d'API réel, mais je n'ai pas pu confirmer avec certitude les URLs d'endpoint exactes, le format d'authentification, ni les noms de champs (documentation derrière connexion développeur / pages qui bloquent la lecture automatisée). Plutôt que de coder à l'aveugle un endpoint que je ne peux pas vérifier — risque réel de livrer une intégration cassée — je préfère attendre soit que vous m'envoyiez un extrait de leur documentation technique une fois connecté à leur portail développeur, soit que vous me confirmiez l'URL exacte d'un appel de test. Dites-le-moi et je les ajoute dès que j'ai de quoi coder juste.
 
 ## 7. Reconnaissance faciale (bêta, désactivée par défaut)
 
@@ -79,6 +86,24 @@ Une fois ces deux étapes faites, activez la fonctionnalité en ajoutant dans Ve
 | `COMPREFACE_API_KEY` | la clé générée par CompreFace lui-même (pas par nous) |
 
 **Important à comprendre** : CompreFace ne recherche pas un visage sur le web public comme le ferait un service commercial (PimEyes, FaceCheck.id). Il ne fait que comparer deux photos entre elles ("Verify"), ou comparer une photo à une collection de visages que *vous* avez vous-même enregistrés au préalable dans CompreFace ("Recognize"). Ce n'est pas un moteur de recherche de visages sur Internet.
+
+## 8. Quota mensuel par code d'accès + alerte par email
+
+Chaque code d'accès a maintenant un quota mensuel, toutes recherches confondues (OSINT Industries, Entreprise/entité, reconnaissance faciale) :
+
+| Codes | Limite mensuelle | Email d'alerte envoyé à... |
+|---|---|---|
+| `809231` à `809236` | 300 recherches | `contact@sovereignman.dev`, une fois, dès que le compteur atteint **200** |
+| `809237`, `809238`, `809239` | 500 recherches | idem, dès que le compteur atteint **~334** (même proportion, 2/3 de la limite) |
+
+**Rien n'est jamais bloqué** : c'est uniquement une alerte informative, envoyée au maximum une fois par code et par mois (le compteur se remet à zéro chaque mois calendaire). Pour changer les limites ou les codes concernés, éditez les constantes en haut de `api/_quota.js` (`DEFAULT_LIMIT`, `HIGH_LIMIT`, `HIGH_LIMIT_CODES`).
+
+Deux services externes sont nécessaires (tous deux gratuits pour ce volume) :
+
+1. **Stockage du compteur — Upstash Redis** : créez une base gratuite sur [upstash.com](https://upstash.com) (ou via Vercel : Storage → Browse Marketplace → Upstash), puis copiez son URL et son jeton REST dans les variables Vercel `UPSTASH_REDIS_REST_URL` et `UPSTASH_REDIS_REST_TOKEN`.
+2. **Envoi d'email — Resend** : créez un compte gratuit sur [resend.com](https://resend.com), vérifiez un domaine d'envoi (ou utilisez leur domaine de test le temps de valider), générez une clé API, et mettez-la dans `RESEND_API_KEY`. Vous pouvez aussi personnaliser `QUOTA_ALERT_FROM` (l'expéditeur) et `QUOTA_ALERT_TO` (le destinataire, `contact@sovereignman.dev` par défaut).
+
+Si l'une de ces deux configurations manque, la fonctionnalité est simplement désactivée — toutes les recherches continuent de fonctionner normalement, vous ne recevrez juste pas l'alerte tant que ce n'est pas configuré. Redéployez après avoir ajouté les variables.
 
 ## Format de réponse de l'API
 
