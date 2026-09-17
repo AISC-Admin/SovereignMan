@@ -3,7 +3,7 @@ const SM_TRANSLATIONS = {
   en: {
     nav_home:"Home", nav_services:"Services", nav_expertise:"Expertise", nav_contact:"Contact",
     menu_label:"[ MENU ]",
-
+ 
     /* HOME */
     hero_sub:"Open-source intelligence, financial investigation, and cyber-intelligence for those who need to know before others do.",
     hero_desc:"SovereignMan OÜ designs bespoke applications and conducts in-depth OSINT investigations — tracing financial schemes, cyber-investigation, dark web monitoring — for governments, law enforcement, private investigators, and corporations.",
@@ -17,7 +17,7 @@ const SM_TRANSLATIONS = {
     home_teaser_more:"View all services →",
     cta_title:"Every case starts with a conversation.",
     cta_sub:"Tell us the context — under mandate, we turn open information into a decision you can act on.",
-
+ 
     /* SERVICES PAGE */
     page_services_tag:"Capabilities", page_services_title:"Areas of Intervention",
     page_services_sub:"A unique foundation combining human-driven intelligence powered by open sources, financial forensics and technical development — to produce actionable intelligence, not raw data.",
@@ -45,7 +45,7 @@ const SM_TRANSLATIONS = {
     c6_li1:"Custom application and monitoring platform development", c6_li2:"Internal OSINT aggregation and visualization tools",
     c6_li3:"Secure and encrypted communication solutions", c6_li4:"Security audits, cybersecurity consulting and system hardening",
     c6_li5:"Technology watch and integration of specialized data sources",
-
+ 
     /* EXPERTISE PAGE */
     page_expertise_tag:"Dossier", page_expertise_title:"Expertise &amp; Methodology",
     page_expertise_sub:"How we turn open information into evidence you can rely on — and the framework we never operate outside of.",
@@ -60,7 +60,7 @@ const SM_TRANSLATIONS = {
     about_p3:"We operate strictly within a defined legal framework: written mandate, compliance with GDPR and applicable legislation, strict confidentiality of all cases handled.",
     ethics_label:"Legal Framework &amp; Ethics —",
     ethics_text:"SovereignMan OÜ acts only under a legitimate mandate, in compliance with Estonian, European (GDPR) and applicable international law. No service is provided outside a verified contractual and legal framework.",
-
+ 
     /* CONTACT PAGE */
     page_contact_tag:"Get in Touch", page_contact_title:"Start a Case",
     page_contact_sub:"Every request is handled in strict confidence. Please do not share sensitive information before a contractual framework is in place.",
@@ -71,12 +71,12 @@ const SM_TRANSLATIONS = {
     opt4:"Institutional / Government Cooperation", opt5:"Secure Application Development", opt6:"Other",
     form_message:"Message", form_placeholder:"Describe the context of your request, without sensitive data at this stage.",
     form_submit:"// Submit request",
-
+ 
     /* FOOTER */
     thanks_tag:"Confirmation", thanks_title:"Request Transmitted",
     thanks_desc:"Your request has been received and encrypted for review. Our team will respond within 48 business hours, from a verified SovereignMan address only.",
     thanks_back:"// Back to home",
-
+ 
     /* SEARCH TOOL */
     nav_search:"Search",
     page_search_tag:"Internal Tool", page_search_title:"OSINT Industries Search Engine",
@@ -94,14 +94,22 @@ const SM_TRANSLATIONS = {
     error_400:"Invalid request — check the search type and value.", error_config:"Server not configured — see setup instructions.",
     no_results_label:"No matching module found for this query.",
     credits_note:"Cost is billed directly by OSINT Industries to your account, per your plan.",
-
+    expand_fields_label:"// Show {n} more fields", collapse_fields_label:"// Collapse",
+    view_account_label:"View account", premium_module_badge:"Premium module",
+    summary_title:"What We Know", summary_pivots_title:"Extracted Identifiers",
+    summary_names:"Names", summary_usernames:"Usernames", summary_emails:"Emails",
+    summary_phones:"Phone Numbers", summary_locations:"Locations",
+    summary_activity_title:"Latest Activity",
+    breach_title:"Breached Accounts", breach_sub:"Accounts found in known data breaches (HaveIBeenPwned).",
+    breach_col_platform:"Platform", breach_col_affected:"Affected Users", breach_col_date:"Date", breach_col_fields:"Compromised Fields",
+ 
     footer_copy:"© {year} SovereignMan OÜ — Tallinn, Estonia — Reg. No. 16797348", footer_top:"Back to top ↑"
   },
-
+ 
   et: {
     nav_home:"Avaleht", nav_services:"Teenused", nav_expertise:"Ekspertiis", nav_contact:"Kontakt",
     menu_label:"[ MENÜÜ ]",
-
+ 
     hero_sub:"Avatud lähtekoodiga luure, finantsuurimised ja küberluure neile, kes peavad teadma enne teisi.",
     hero_desc:"SovereignMan OÜ arendab kohandatud rakendusi ja viib läbi põhjalikke OSINT-uuringuid — finantsskeemide jälitamine, küberuurimised, pimeveebi seire — valitsuste, õiguskaitseasutuste, erakontrolörite ja ettevõtete jaoks.",
     btn_contact:"// Alusta juhtumit", btn_explore:"Tutvu võimekustega",
@@ -114,7 +122,7 @@ const SM_TRANSLATIONS = {
     home_teaser_more:"Vaata kõiki teenuseid →",
     cta_title:"Iga juhtum algab vestlusest.",
     cta_sub:"Rääkige meile kontekstist — mandaadi alusel muudame avatud teabe otsuseks, mille alusel tegutseda.",
-
+ 
     page_services_tag:"Võimekused", page_services_title:"Tegevusvaldkonnad",
     page_services_sub:"Ainulaadne alus, mis ühendab avatud allikatel põhineva analüüsi, finantsforensika ja tehnilise arenduse — et toota tegutsemisväärset luureteavet, mitte lihtsalt andmeid.",
     c1_title:"Avatud Lähtekoodiga Luure (OSINT)", c1_lead:"Avatud allikate kogumine, seostamine ja analüüs rahvusvahelisel tasandil.",
@@ -141,7 +149,7 @@ const SM_TRANSLATIONS = {
     c6_li1:"Kohandatud rakenduste ja seirelahenduste arendus", c6_li2:"Sisemised OSINT-i koondamise ja visualiseerimise tööriistad",
     c6_li3:"Turvalised ja krüpteeritud sidelahendused", c6_li4:"Turvaauditid, küberturvalisuse nõustamine ja süsteemide kõvendamine",
     c6_li5:"Tehnoloogiaseire ja spetsiifiliste andmeallikate integreerimine",
-
+ 
     page_expertise_tag:"Toimik", page_expertise_title:"Ekspertiis ja Metoodika",
     page_expertise_sub:"Kuidas me muudame avatud teabe usaldusväärseteks tõenditeks — ja raamistik, millest me kunagi väljapoole ei astu.",
     method_tag:"Protsess", method_title:"Metoodika", method_sub:"Range ja dokumenteeritud luureahel, kohandatud igale mandaadile.",
@@ -155,7 +163,7 @@ const SM_TRANSLATIONS = {
     about_p3:"Tegutseme rangelt määratletud õigusraamistikus: kirjalik mandaat, vastavus GDPR-ile ja kohalduvatele õigusaktidele, kõigi käsitletavate juhtumite range konfidentsiaalsus.",
     ethics_label:"Õigusraamistik ja Eetika —",
     ethics_text:"SovereignMan OÜ tegutseb ainult õiguspärase mandaadi alusel, järgides Eesti, Euroopa (GDPR) ja kohalduvat rahvusvahelist õigust. Teenuseid ei osutata väljaspool kontrollitud lepingulist ja õiguslikku raamistikku.",
-
+ 
     page_contact_tag:"Võta Ühendust", page_contact_title:"Alusta Juhtumit",
     page_contact_sub:"Iga päring käsitletakse rangelt konfidentsiaalselt. Palun ärge jagage tundlikku teavet enne lepingulise raamistiku kehtestamist.",
     label_email:"E-post", label_office:"Registrijärgne asukoht", label_registry:"Register", label_avail:"Kättesaadavus",
@@ -165,11 +173,11 @@ const SM_TRANSLATIONS = {
     opt4:"Institutsionaalne / valitsuskoostöö", opt5:"Turvalise rakenduse arendus", opt6:"Muu",
     form_message:"Sõnum", form_placeholder:"Kirjeldage oma päringu konteksti, ilma tundliku teabeta praeguses etapis.",
     form_submit:"// Saada päring",
-
+ 
     thanks_tag:"Kinnitus", thanks_title:"Päring Saadetud",
     thanks_desc:"Teie päring on vastu võetud ja krüpteeritud läbivaatamiseks. Meie meeskond vastab 48 tööajatunni jooksul ainult kinnitatud SovereignMani aadressilt.",
     thanks_back:"// Tagasi avalehele",
-
+ 
     /* SEARCH TOOL */
     nav_search:"Otsing",
     page_search_tag:"Sisemine tööriist", page_search_title:"OSINT Industries otsingumootor",
@@ -187,14 +195,23 @@ const SM_TRANSLATIONS = {
     error_400:"Vigane päring — kontrollige otsingu tüüpi ja väärtust.", error_config:"Server ei ole seadistatud — vaadake seadistusjuhendit.",
     no_results_label:"Selle päringu jaoks sobivat moodulit ei leitud.",
     credits_note:"Kulu arveldab teie kontole otse OSINT Industries vastavalt teie paketile.",
-
+ 
+    expand_fields_label:"// Näita veel {n} välja", collapse_fields_label:"// Peida",
+    view_account_label:"Vaata kontot", premium_module_badge:"Premium moodul",
+    summary_title:"Mida me teame", summary_pivots_title:"Tuvastatud identifikaatorid",
+    summary_names:"Nimed", summary_usernames:"Kasutajanimed", summary_emails:"E-postid",
+    summary_phones:"Telefoninumbrid", summary_locations:"Asukohad",
+    summary_activity_title:"Viimane tegevus",
+    breach_title:"Lekkinud kontod", breach_sub:"Kontod, mis on leitud teadaolevatest andmelekketest (HaveIBeenPwned).",
+    breach_col_platform:"Platvorm", breach_col_affected:"Mõjutatud kasutajad", breach_col_date:"Kuupäev", breach_col_fields:"Lekkinud andmed",
+ 
     footer_copy:"© {year} SovereignMan OÜ — Tallinn, Eesti — Reg. nr 16797348", footer_top:"Tagasi üles ↑"
   },
-
+ 
   fr: {
     nav_home:"Accueil", nav_services:"Services", nav_expertise:"Expertise", nav_contact:"Contact",
     menu_label:"[ MENU ]",
-
+ 
     hero_sub:"Renseignement open source, investigations financières et cyber-intelligence pour ceux qui doivent savoir avant les autres.",
     hero_desc:"SovereignMan OÜ conçoit des applications sur mesure et conduit des enquêtes OSINT approfondies — traçage de montages financiers, cyber-investigation, veille dark web — au service des gouvernements, des forces de l'ordre, des cabinets de détectives et des entreprises.",
     btn_contact:"// Initier un dossier", btn_explore:"Explorer les capacités",
@@ -207,7 +224,7 @@ const SM_TRANSLATIONS = {
     home_teaser_more:"Voir tous les services →",
     cta_title:"Chaque dossier commence par un échange.",
     cta_sub:"Décrivez-nous le contexte — sous mandat, nous transformons l'information ouverte en décision exploitable.",
-
+ 
     page_services_tag:"Capacités", page_services_title:"Domaines d'intervention",
     page_services_sub:"Un socle unique combinant renseignement humain assisté par les sources ouvertes, forensique financière et développement technique — pour produire du renseignement exploitable, pas de simples données.",
     c1_title:"Renseignement OSINT", c1_lead:"Collecte, corrélation et analyse de sources ouvertes à l'échelle internationale.",
@@ -234,7 +251,7 @@ const SM_TRANSLATIONS = {
     c6_li1:"Développement d'applications et de plateformes de veille sur mesure", c6_li2:"Outils internes d'agrégation et de visualisation OSINT",
     c6_li3:"Solutions de communication sécurisée et chiffrée", c6_li4:"Audit de sécurité, conseil en cybersécurité et durcissement de systèmes",
     c6_li5:"Veille technologique et intégration de sources de données spécialisées",
-
+ 
     page_expertise_tag:"Dossier", page_expertise_title:"Expertise &amp; Méthodologie",
     page_expertise_sub:"Comment nous transformons l'information ouverte en éléments fiables — et le cadre dont nous ne sortons jamais.",
     method_tag:"Processus", method_title:"Méthodologie", method_sub:"Une chaîne de renseignement rigoureuse, documentée et adaptée à chaque mandat.",
@@ -248,7 +265,7 @@ const SM_TRANSLATIONS = {
     about_p3:"Nous intervenons exclusivement dans un cadre légal défini : mandat écrit, respect du RGPD et des législations applicables, confidentialité stricte des dossiers traités.",
     ethics_label:"Cadre légal &amp; déontologie —",
     ethics_text:"SovereignMan OÜ n'opère que sur mandat légitime, dans le respect des lois estoniennes, européennes (RGPD) et internationales applicables. Aucune prestation n'est fournie en dehors d'un cadre contractuel et légal vérifié.",
-
+ 
     page_contact_tag:"Prise de contact", page_contact_title:"Initier un dossier",
     page_contact_sub:"Toute demande est traitée de manière strictement confidentielle. Merci de ne transmettre aucune information sensible avant l'établissement d'un cadre contractuel.",
     label_email:"Email", label_office:"Siège social", label_registry:"Registre", label_avail:"Disponibilité",
@@ -258,11 +275,11 @@ const SM_TRANSLATIONS = {
     opt4:"Coopération institutionnelle / gouvernementale", opt5:"Développement d'application sécurisée", opt6:"Autre",
     form_message:"Message", form_placeholder:"Décrivez le contexte de votre demande, sans données sensibles à ce stade.",
     form_submit:"// Transmettre la demande",
-
+ 
     thanks_tag:"Confirmation", thanks_title:"Demande transmise",
     thanks_desc:"Votre demande a été reçue et chiffrée en vue de son examen. Notre équipe répondra sous 48h ouvrées, uniquement depuis une adresse SovereignMan vérifiée.",
     thanks_back:"// Retour à l'accueil",
-
+ 
     /* OUTIL DE RECHERCHE */
     nav_search:"Recherche",
     page_search_tag:"Outil interne", page_search_title:"Moteur de recherche OSINT Industries",
@@ -280,14 +297,23 @@ const SM_TRANSLATIONS = {
     error_400:"Requête invalide — vérifiez le type et la valeur recherchés.", error_config:"Serveur non configuré — voir les instructions d'installation.",
     no_results_label:"Aucun module correspondant trouvé pour cette recherche.",
     credits_note:"Le coût est facturé directement par OSINT Industries sur votre compte, selon votre forfait.",
-
+ 
+    expand_fields_label:"// Afficher {n} champs de plus", collapse_fields_label:"// Réduire",
+    view_account_label:"Voir le compte", premium_module_badge:"Module premium",
+    summary_title:"Ce que nous savons", summary_pivots_title:"Identifiants extraits",
+    summary_names:"Noms", summary_usernames:"Noms d'utilisateur", summary_emails:"Emails",
+    summary_phones:"Numéros de téléphone", summary_locations:"Localisations",
+    summary_activity_title:"Activité récente",
+    breach_title:"Comptes compromis", breach_sub:"Comptes retrouvés dans des fuites de données connues (HaveIBeenPwned).",
+    breach_col_platform:"Plateforme", breach_col_affected:"Utilisateurs concernés", breach_col_date:"Date", breach_col_fields:"Données compromises",
+ 
     footer_copy:"© {year} SovereignMan OÜ — Tallinn, Estonie — Reg. N° 16797348", footer_top:"Retour en haut ↑"
   },
-
+ 
   ru: {
     nav_home:"Главная", nav_services:"Услуги", nav_expertise:"Экспертиза", nav_contact:"Контакты",
     menu_label:"[ МЕНЮ ]",
-
+ 
     hero_sub:"Разведка на основе открытых источников, финансовые расследования и киберразведка — для тех, кому нужно знать раньше других.",
     hero_desc:"SovereignMan OÜ разрабатывает индивидуальные приложения и проводит углублённые OSINT-расследования — отслеживание финансовых схем, киберрасследования, мониторинг даркнета — в интересах государственных органов, правоохранительных структур, частных детективов и компаний.",
     btn_contact:"// Начать дело", btn_explore:"Изучить возможности",
@@ -300,7 +326,7 @@ const SM_TRANSLATIONS = {
     home_teaser_more:"Смотреть все услуги →",
     cta_title:"Каждое дело начинается с разговора.",
     cta_sub:"Расскажите нам о контексте — на основании мандата мы превращаем открытую информацию в решение, на которое можно опереться.",
-
+ 
     page_services_tag:"Возможности", page_services_title:"Направления деятельности",
     page_services_sub:"Уникальное сочетание анализа на основе открытых источников, финансовой форензики и технической разработки — для получения не просто данных, а пригодного к действию разведывательного продукта.",
     c1_title:"Разведка на основе открытых источников (OSINT)", c1_lead:"Сбор, сопоставление и анализ открытых источников в международном масштабе.",
@@ -327,7 +353,7 @@ const SM_TRANSLATIONS = {
     c6_li1:"Разработка индивидуальных приложений и платформ мониторинга", c6_li2:"Внутренние инструменты агрегации и визуализации OSINT",
     c6_li3:"Защищённые и зашифрованные решения для связи", c6_li4:"Аудит безопасности, консалтинг по кибербезопасности и усиление защиты систем",
     c6_li5:"Мониторинг технологий и интеграция специализированных источников данных",
-
+ 
     page_expertise_tag:"Досье", page_expertise_title:"Экспертиза и Методология",
     page_expertise_sub:"Как мы превращаем открытую информацию в надёжные доказательства — и рамки, за пределы которых мы никогда не выходим.",
     method_tag:"Процесс", method_title:"Методология", method_sub:"Строгая и документированная разведывательная цепочка, адаптированная под каждый мандат.",
@@ -341,7 +367,7 @@ const SM_TRANSLATIONS = {
     about_p3:"Мы действуем строго в рамках определённых правовых норм: письменный мандат, соблюдение GDPR и применимого законодательства, строгая конфиденциальность всех рассматриваемых дел.",
     ethics_label:"Правовые рамки и этика —",
     ethics_text:"SovereignMan OÜ действует только на основании законного мандата, соблюдая эстонское, европейское (GDPR) и применимое международное право. Услуги не оказываются вне проверенных договорных и правовых рамок.",
-
+ 
     page_contact_tag:"Связаться с нами", page_contact_title:"Начать дело",
     page_contact_sub:"Каждый запрос обрабатывается в строгой конфиденциальности. Просьба не передавать конфиденциальную информацию до заключения договорных рамок.",
     label_email:"Электронная почта", label_office:"Юридический адрес", label_registry:"Регистрация", label_avail:"Доступность",
@@ -351,11 +377,11 @@ const SM_TRANSLATIONS = {
     opt4:"Институциональное / государственное сотрудничество", opt5:"Разработка защищённого приложения", opt6:"Другое",
     form_message:"Сообщение", form_placeholder:"Опишите контекст вашего запроса без конфиденциальных данных на данном этапе.",
     form_submit:"// Отправить запрос",
-
+ 
     thanks_tag:"Подтверждение", thanks_title:"Запрос отправлен",
     thanks_desc:"Ваш запрос получен и зашифрован для рассмотрения. Наша команда ответит в течение 48 рабочих часов, только с проверенного адреса SovereignMan.",
     thanks_back:"// Вернуться на главную",
-
+ 
     /* ИНСТРУМЕНТ ПОИСКА */
     nav_search:"Поиск",
     page_search_tag:"Внутренний инструмент", page_search_title:"Поисковая система OSINT Industries",
@@ -373,7 +399,17 @@ const SM_TRANSLATIONS = {
     error_400:"Некорректный запрос — проверьте тип и значение поиска.", error_config:"Сервер не настроен — см. инструкции по установке.",
     no_results_label:"По этому запросу подходящих модулей не найдено.",
     credits_note:"Стоимость списывается OSINT Industries напрямую с вашего аккаунта согласно тарифу.",
-
+ 
+    expand_fields_label:"// Показать ещё {n} полей", collapse_fields_label:"// Свернуть",
+    view_account_label:"Открыть аккаунт", premium_module_badge:"Премиум-модуль",
+    summary_title:"Что мы знаем", summary_pivots_title:"Извлечённые идентификаторы",
+    summary_names:"Имена", summary_usernames:"Имена пользователей", summary_emails:"Email-адреса",
+    summary_phones:"Номера телефонов", summary_locations:"Местоположения",
+    summary_activity_title:"Последняя активность",
+    breach_title:"Скомпрометированные аккаунты", breach_sub:"Аккаунты, найденные в известных утечках данных (HaveIBeenPwned).",
+    breach_col_platform:"Платформа", breach_col_affected:"Затронутые пользователи", breach_col_date:"Дата", breach_col_fields:"Скомпрометированные данные",
+ 
     footer_copy:"© {year} SovereignMan OÜ — Таллин, Эстония — Рег. № 16797348", footer_top:"Наверх ↑"
   }
 };
+ 
