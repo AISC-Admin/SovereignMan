@@ -20,6 +20,27 @@
   .gate-error{color:var(--magenta); font-size:13px; margin-top:10px; display:none;}
   #searchApp{display:none;}
 
+  .hero-top-row{display:flex; align-items:flex-start; justify-content:space-between; gap:20px;}
+  .btn-ghost{background:none; border:1px solid var(--border); color:var(--muted); white-space:nowrap;}
+  .btn-ghost:hover{color:var(--magenta); border-color:var(--magenta);}
+  @media (max-width:700px){ .hero-top-row{flex-direction:column;} }
+  .source-hint{color:var(--muted); font-size:12px; margin:-12px 0 22px; line-height:1.5;}
+
+  /* ---------- ICIJ Offshore Leaks table ---------- */
+  .icij-card{background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel2)); border:1px solid var(--border); padding:20px 22px; margin-bottom:16px;}
+  .icij-card h4{font-family:var(--mono-display); color:var(--purple-dim); text-transform:uppercase; letter-spacing:1px; font-size:14px; margin-bottom:4px;}
+  .icij-card > p{color:var(--muted); font-size:12.5px; margin-bottom:16px;}
+  table.icij-table{width:100%; border-collapse:collapse; font-size:12.5px;}
+  table.icij-table th{text-align:left; color:var(--muted); text-transform:uppercase; letter-spacing:1px; font-size:11px; padding:8px 10px; border-bottom:1px solid var(--border);}
+  table.icij-table td{padding:10px 10px; border-bottom:1px solid rgba(28,28,64,0.6); vertical-align:top;}
+  .icij-score{color:var(--purple-dim); font-family:var(--mono-display);}
+
+  /* ---------- Face search panel ---------- */
+  .face-panel{border-top:1px solid var(--border); padding-top:40px; margin-top:10px;}
+  .face-panel-inner{max-width:760px;}
+  .face-row{display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:14px; align-items:end; margin:18px 0;}
+  @media (max-width:860px){ .face-row{grid-template-columns:1fr;} }
+
   /* ---------- Summary panel ---------- */
   .summary-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px;}
   .summary-card{background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel2)); border:1px solid var(--border); padding:20px 22px;}
@@ -163,9 +184,14 @@
 <div id="searchApp">
   <header class="page-hero">
     <div class="container">
-      <span class="tag" data-i18n="page_search_tag">Internal Tool</span>
-      <h1 class="section-title" data-i18n="page_search_title">OSINT Industries Search Engine</h1>
-      <p class="section-sub" data-i18n="page_search_sub">Real-time lookups connected to your OSINT Industries account. Each search consumes credits from your subscription.</p>
+      <div class="hero-top-row">
+        <div>
+          <span class="tag" data-i18n="page_search_tag">Internal Tool</span>
+          <h1 class="section-title" data-i18n="page_search_title">OSINT Industries Search Engine</h1>
+          <p class="section-sub" data-i18n="page_search_sub">Real-time lookups connected to your OSINT Industries account. Each search consumes credits from your subscription.</p>
+        </div>
+        <button class="btn btn-ghost" id="logoutBtn" data-i18n="logout_label">// Log out</button>
+      </div>
     </div>
   </header>
 
@@ -180,6 +206,7 @@
             <option value="username" data-i18n="type_username">Username</option>
             <option value="name" data-i18n="type_name">Full name</option>
             <option value="wallet" data-i18n="type_wallet">Crypto wallet</option>
+            <option value="company" data-i18n="type_company">Company / entity</option>
           </select>
         </div>
         <div class="field">
@@ -191,14 +218,47 @@
         </div>
       </div>
 
-      <label style="display:flex; align-items:center; gap:8px; margin-bottom:26px; cursor:pointer;">
+      <label id="premiumRow" style="display:flex; align-items:center; gap:8px; margin-bottom:26px; cursor:pointer;">
         <input type="checkbox" id="premiumToggle" style="width:auto;">
         <span data-i18n="premium_label" style="font-size:13px; color:var(--muted); text-transform:none; letter-spacing:0; font-family:var(--mono-body);">Enable premium modules (Snapchat, TikTok…) — extra credits apply</span>
       </label>
+      <p id="companyHint" class="source-hint" style="display:none;" data-i18n="company_hint">Sources: French company registry (data.gouv.fr), GLEIF (LEI), ICIJ Offshore Leaks Database — no API key required for any of these.</p>
 
       <div id="messages"></div>
       <div id="summary"></div>
       <div id="results"></div>
+    </div>
+  </section>
+
+  <section id="facePanel" class="face-panel">
+    <div class="container">
+      <div class="face-panel-inner">
+        <span class="tag" data-i18n="face_tag">Beta — accessory</span>
+        <h3 data-i18n="face_title">Facial recognition (CompreFace)</h3>
+        <p class="source-hint" data-i18n="face_desc">Compares two photos, or matches one photo against your own enrolled collection. This does NOT search the public web for a face — see SETUP-RECHERCHE.md. Requires a self-hosted CompreFace server and is off until FACE_SEARCH_ENABLED is set.</p>
+        <div class="face-row">
+          <div class="field">
+            <label for="faceModeSelect" data-i18n="face_mode_label">Mode</label>
+            <select id="faceModeSelect">
+              <option value="verify" data-i18n="face_mode_verify">Verify — compare two photos</option>
+              <option value="recognize" data-i18n="face_mode_recognize">Recognize — match against your collection</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="faceImage1" data-i18n="face_image1_label">Photo 1</label>
+            <input type="file" id="faceImage1" accept="image/*">
+          </div>
+          <div class="field" id="faceImage2Field">
+            <label for="faceImage2" data-i18n="face_image2_label">Photo 2 (verify mode)</label>
+            <input type="file" id="faceImage2" accept="image/*">
+          </div>
+          <div class="field">
+            <button class="btn" id="faceSubmit" data-i18n="face_submit_label">// Run face check</button>
+          </div>
+        </div>
+        <div id="faceMessages"></div>
+        <div id="faceResults"></div>
+      </div>
     </div>
   </section>
 </div>
@@ -226,6 +286,9 @@
   const searchType = document.getElementById('searchType');
   const searchQuery = document.getElementById('searchQuery');
   const premiumToggle = document.getElementById('premiumToggle');
+  const premiumRow = document.getElementById('premiumRow');
+  const companyHint = document.getElementById('companyHint');
+  const logoutBtn = document.getElementById('logoutBtn');
 
   let sessionPassword = null;
   try{ sessionPassword = sessionStorage.getItem('sm_access_code'); }catch(e){}
@@ -280,6 +343,24 @@
   gateSubmit.addEventListener('click', tryUnlock);
   gatePassword.addEventListener('keydown', (e) => { if(e.key === 'Enter') tryUnlock(); });
 
+  function logout(){
+    sessionPassword = null;
+    try{ sessionStorage.removeItem('sm_access_code'); }catch(e){}
+    gatePassword.value = '';
+    gateError.style.display = 'none';
+    searchApp.style.display = 'none';
+    gateWrap.style.display = 'flex';
+  }
+  logoutBtn.addEventListener('click', logout);
+
+  function updateSearchTypeUI(){
+    const isCompany = searchType.value === 'company';
+    premiumRow.style.display = isCompany ? 'none' : 'flex';
+    companyHint.style.display = isCompany ? 'block' : 'none';
+  }
+  searchType.addEventListener('change', updateSearchTypeUI);
+  updateSearchTypeUI();
+
   function escapeHtml(str){
     return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
@@ -302,12 +383,15 @@
     pinterest:'pinterest.com', reddit:'reddit.com', twitch:'twitch.tv', apple:'apple.com', yahoo:'yahoo.com',
     wordpress:'wordpress.com', tumblr:'tumblr.com', vimeo:'vimeo.com', quora:'quora.com',
     steam:'steampowered.com', epicgames:'epicgames.com', roblox:'roblox.com', imgur:'imgur.com',
-    hibp:'haveibeenpwned.com', haveibeenpwned:'haveibeenpwned.com', breach:'haveibeenpwned.com'
+    hibp:'haveibeenpwned.com', haveibeenpwned:'haveibeenpwned.com', breach:'haveibeenpwned.com',
+    entreprisefr:'data.gouv.fr', gleif:'gleif.org', icijoffshoreleaks:'icij.org', pappers:'pappers.fr'
   };
   const MODULE_LABELS = {
     hibp:'Have I Been Pwned', haveibeenpwned:'Have I Been Pwned', office365:'Microsoft', aliexpress:'AliExpress',
     github:'GitHub', paypal:'PayPal', airbnb:'AirBnB', linkedin:'LinkedIn', tiktok:'TikTok', youtube:'YouTube',
-    whatsapp:'WhatsApp'
+    whatsapp:'WhatsApp',
+    entreprisefr:'Registre des entreprises (France)', gleif:'GLEIF — Identifiant LEI', icijoffshoreleaks:'ICIJ Offshore Leaks',
+    pappers:'Pappers — Registre légal & financier'
   };
   function normKey(mod){ return String(mod||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
   function moduleDomain(mod){ const k = normKey(mod); return MODULE_DOMAINS[k] || (k ? k + '.com' : 'example.com'); }
@@ -324,6 +408,9 @@
   function isBreachModule(mod){
     const k = normKey(mod && mod.module);
     return k.includes('hibp') || k.includes('pwned') || k.includes('breach');
+  }
+  function isIcijModule(mod){
+    return normKey(mod && mod.module) === 'icijoffshoreleaks';
   }
 
   /* ---------- value type helpers ---------- */
@@ -601,6 +688,35 @@
     return card;
   }
 
+  /* ---------- ICIJ Offshore Leaks match table ---------- */
+  function renderIcijTable(mod){
+    const matches = Array.isArray(mod.icij_matches) ? mod.icij_matches : [];
+    if(!matches.length) return null;
+
+    const rows = matches.map(m => `<tr>
+      <td>${escapeHtml(m.name || 'Unknown')}</td>
+      <td>${Array.isArray(m.types) && m.types.length ? escapeHtml(m.types.join(', ')) : '—'}</td>
+      <td class="icij-score">${m.score !== null && m.score !== undefined ? escapeHtml(String(m.score)) : '—'}</td>
+      <td>${m.url ? `<a class="fv-link" href="${escapeAttr(m.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('icij_view_label'))} ↗</a>` : '—'}</td>
+    </tr>`).join('');
+
+    const card = document.createElement('div');
+    card.className = 'icij-card';
+    card.innerHTML = `
+      <h4>${escapeHtml(t('icij_title'))}</h4>
+      <p>${escapeHtml(t('icij_sub'))}</p>
+      <table class="icij-table">
+        <thead><tr>
+          <th>${escapeHtml(t('icij_col_entity'))}</th>
+          <th>${escapeHtml(t('icij_col_type'))}</th>
+          <th>${escapeHtml(t('icij_col_score'))}</th>
+          <th>${escapeHtml(t('icij_col_source'))}</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+    return card;
+  }
+
   /* ---------- "What We Know" summary panel ---------- */
   function buildSummary(modules){
     const names = new Set(), usernames = new Set(), emails = new Set(), phones = new Set(),
@@ -683,6 +799,12 @@
     if(modules && modules.length){
       buildSummary(modules);
       modules.forEach(mod => {
+        if(isIcijModule(mod)){
+          const table = renderIcijTable(mod);
+          if(table){ results.appendChild(table); }
+          else if(searchType.value === 'company'){ results.appendChild(renderModuleCard(Object.assign({}, mod, {spec_format: []}))); }
+          return;
+        }
         if(isBreachModule(mod)){
           const table = renderBreachTable(mod);
           if(table){ results.appendChild(table); return; }
@@ -719,9 +841,13 @@
     searchSubmit.textContent = t('loading_label');
 
     try{
-      const resp = await fetch('/api/search', {
+      const endpoint = type === 'company' ? '/api/entity-search' : '/api/search';
+      const payload = type === 'company'
+        ? { password: sessionPassword, query }
+        : { password: sessionPassword, type, query, premium: premiumToggle.checked };
+      const resp = await fetch(endpoint, {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ password: sessionPassword, type, query, premium: premiumToggle.checked })
+        body: JSON.stringify(payload)
       });
       const data = await resp.json().catch(()=>({}));
 
@@ -748,6 +874,77 @@
 
   searchSubmit.addEventListener('click', runSearch);
   searchQuery.addEventListener('keydown', (e) => { if(e.key === 'Enter') runSearch(); });
+
+  /* ---------- Face search panel (CompreFace, beta accessory) ---------- */
+  const faceModeSelect = document.getElementById('faceModeSelect');
+  const faceImage1 = document.getElementById('faceImage1');
+  const faceImage2 = document.getElementById('faceImage2');
+  const faceImage2Field = document.getElementById('faceImage2Field');
+  const faceSubmit = document.getElementById('faceSubmit');
+  const faceMessages = document.getElementById('faceMessages');
+  const faceResults = document.getElementById('faceResults');
+
+  function updateFaceModeUI(){
+    faceImage2Field.style.display = faceModeSelect.value === 'verify' ? 'block' : 'none';
+  }
+  if(faceModeSelect){
+    faceModeSelect.addEventListener('change', updateFaceModeUI);
+    updateFaceModeUI();
+  }
+
+  function fileToBase64(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function runFaceCheck(){
+    if(!faceImage1.files[0]){ return; }
+    const mode = faceModeSelect.value;
+    if(mode === 'verify' && !faceImage2.files[0]){
+      faceMessages.innerHTML = `<div class="banner-msg error">${escapeHtml(t('face_error_need_two'))}</div>`;
+      return;
+    }
+    faceSubmit.disabled = true;
+    const originalLabel = faceSubmit.textContent;
+    faceSubmit.textContent = t('loading_label');
+    faceMessages.innerHTML = '';
+    faceResults.innerHTML = '';
+
+    try{
+      const imageBase64 = await fileToBase64(faceImage1.files[0]);
+      const targetImageBase64 = mode === 'verify' ? await fileToBase64(faceImage2.files[0]) : undefined;
+
+      const resp = await fetch('/api/face-search', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ password: sessionPassword, mode, imageBase64, targetImageBase64 })
+      });
+      const data = await resp.json().catch(()=>({}));
+
+      if(resp.status === 503){
+        faceMessages.innerHTML = `<div class="banner-msg info">${escapeHtml(t('face_disabled_label'))}</div>`;
+      } else if(resp.status === 401){
+        faceMessages.innerHTML = `<div class="banner-msg error">${escapeHtml(t('gate_error'))}</div>`;
+      } else if(!resp.ok){
+        faceMessages.innerHTML = `<div class="banner-msg error">${escapeHtml((data && data.error) || t('error_generic'))}</div>`;
+      } else {
+        const pre = document.createElement('pre');
+        pre.className = 'raw-json';
+        pre.style.display = 'block';
+        pre.textContent = JSON.stringify(data.result, null, 2);
+        faceResults.appendChild(pre);
+      }
+    }catch(e){
+      faceMessages.innerHTML = `<div class="banner-msg error">${escapeHtml(t('error_generic'))}</div>`;
+    }
+
+    faceSubmit.disabled = false;
+    faceSubmit.textContent = originalLabel;
+  }
+  if(faceSubmit){ faceSubmit.addEventListener('click', runFaceCheck); }
 })();
 </script>
 </body>
