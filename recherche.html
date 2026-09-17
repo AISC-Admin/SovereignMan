@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -866,18 +866,18 @@
         gateError.style.display = 'block';
         return;
       }
-      if(resp.status === 402){ renderMessage('error', t('error_402')); return; }
-      if(resp.status === 400){ renderMessage('error', t('error_400')); return; }
-      if(resp.status === 500){ renderMessage('error', t('error_config')); return; }
-      if(!resp.ok){ renderMessage('error', (data && data.error) || t('error_generic')); return; }
+      if(resp.status === 402){ renderMessage('error', (data && data.error) || t('error_402')); return; }
+      if(resp.status === 400){ renderMessage('error', (data && data.error) || t('error_400')); return; }
+      if(resp.status === 500){ renderMessage('error', (data && data.error) || t('error_config')); return; }
+      if(!resp.ok){ renderMessage('error', (data && data.error) || t('error_generic') + ` (HTTP ${resp.status}${resp.status===404 ? ` — ${endpoint} not found, is it deployed?` : ''})`); return; }
 
       renderResults(data);
     }catch(e){
       renderMessage('error', t('error_generic'));
+    }finally{
+      searchSubmit.disabled = false;
+      searchSubmit.textContent = originalLabel;
     }
-
-    searchSubmit.disabled = false;
-    searchSubmit.textContent = originalLabel;
   }
 
   searchSubmit.addEventListener('click', runSearch);
