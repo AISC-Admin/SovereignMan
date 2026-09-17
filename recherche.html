@@ -150,7 +150,11 @@
   try{ sessionPassword = sessionStorage.getItem('sm_access_code'); }catch(e){}
 
   function lang(){ return document.documentElement.lang || 'en'; }
-  function t(key){ return (window.SM_TRANSLATIONS && SM_TRANSLATIONS[lang()] && SM_TRANSLATIONS[lang()][key]) || key; }
+  function t(key){
+    try{
+      return (typeof SM_TRANSLATIONS !== 'undefined' && SM_TRANSLATIONS[lang()] && SM_TRANSLATIONS[lang()][key]) || key;
+    }catch(e){ return key; }
+  }
 
   function unlock(){
     gateWrap.style.display = 'none';
@@ -168,17 +172,26 @@
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({ password: pwd })
       });
-      const data = await resp.json().catch(()=>({}));
+      let data = {};
+      try{ data = await resp.json(); }catch(e){ data = {}; }
+
       if(resp.ok && data.ok){
         sessionPassword = pwd;
         try{ sessionStorage.setItem('sm_access_code', pwd); }catch(e){}
         gateError.style.display = 'none';
         unlock();
+      } else if(resp.status === 500){
+        gateError.textContent = (data && data.error) ? `${t('error_config')} (${data.error})` : t('error_config');
+        gateError.style.display = 'block';
+      } else if(resp.status === 401){
+        gateError.textContent = t('gate_error');
+        gateError.style.display = 'block';
       } else {
+        gateError.textContent = `${t('error_generic')} (HTTP ${resp.status}${resp.status===404 ? ' — /api/auth not found, is this deployed on Vercel?' : ''})`;
         gateError.style.display = 'block';
       }
     }catch(e){
-      gateError.textContent = t('error_generic');
+      gateError.textContent = t('error_generic') + ' (network)';
       gateError.style.display = 'block';
     }
     gateSubmit.disabled = false;
