@@ -31,6 +31,8 @@
 //                             service (created in the CompreFace admin UI, not from us)
 //   FACE_SEARCH_ENABLED    — must be exactly "true" to activate this endpoint
 
+const { recordSearchAndMaybeAlert } = require('./_quota');
+
 function getValidCodes() {
   const raw = process.env.SEARCH_TOOL_PASSWORDS || '';
   return raw.split(',').map(c => c.trim()).filter(Boolean);
@@ -84,6 +86,9 @@ module.exports = async (req, res) => {
     return;
   }
 
+  // Counts toward the same monthly per-code quota as /api/search and /api/entity-search.
+  const quotaPromise = recordSearchAndMaybeAlert(password);
+
   try {
     const base = compreFaceUrl.replace(/\/+$/, '');
     let upstream;
@@ -115,11 +120,14 @@ module.exports = async (req, res) => {
     try { data = JSON.parse(text); } catch (e) { data = { raw: text }; }
 
     if (!upstream.ok) {
+      await quotaPromise;
       res.status(upstream.status).json({ error: `CompreFace error (HTTP ${upstream.status})`, details: data });
       return;
     }
+    await quotaPromise;
     res.status(200).json({ ok: true, mode: mode === 'verify' ? 'verify' : 'recognize', result: data });
   } catch (err) {
+    await quotaPromise;
     res.status(502).json({ error: 'Failed to reach the CompreFace server', details: String(err) });
   }
 };
